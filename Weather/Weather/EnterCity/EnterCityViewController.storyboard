@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Weather-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="EnterCityViewController" id="BYZ-38-t0r" customClass="EnterCityViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgWeather" translatesAutoresizingMaskIntoConstraints="NO" id="IDp-iK-lTZ">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Vv-OI-k2Z">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzA-TT-G2c">
+                                        <rect key="frame" x="30" y="60" width="257.5" height="76.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="76.5" id="pXd-1o-f86"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="70"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="morphingEnabled" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QKn-bv-LE4">
+                                        <rect key="frame" x="57" y="326.5" width="300" height="50"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter city" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nbs-7t-MnU">
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="300" id="5Ud-Aa-vee"/>
+                                                    <constraint firstAttribute="height" constant="50" id="AHD-rt-vGX"/>
+                                                </constraints>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="nbs-7t-MnU" firstAttribute="centerX" secondItem="QKn-bv-LE4" secondAttribute="centerX" id="5OM-bs-WUF"/>
+                                            <constraint firstItem="nbs-7t-MnU" firstAttribute="centerY" secondItem="QKn-bv-LE4" secondAttribute="centerY" id="Hxe-Ud-Tkg"/>
+                                            <constraint firstItem="nbs-7t-MnU" firstAttribute="leading" secondItem="QKn-bv-LE4" secondAttribute="leading" id="Jgt-HY-gXC"/>
+                                            <constraint firstAttribute="trailing" secondItem="nbs-7t-MnU" secondAttribute="trailing" id="VFG-Jo-YVz"/>
+                                            <constraint firstAttribute="bottom" secondItem="nbs-7t-MnU" secondAttribute="bottom" id="YVI-i3-So7"/>
+                                            <constraint firstAttribute="height" constant="50" id="fZ9-Q5-QhJ"/>
+                                            <constraint firstItem="nbs-7t-MnU" firstAttribute="top" secondItem="QKn-bv-LE4" secondAttribute="top" id="vL8-PC-LdM"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="25"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XrZ-u9-Adr">
+                                        <rect key="frame" x="183" y="506.5" width="48.5" height="62"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="62" id="5wB-el-u01"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="57"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDO-wq-zmS" customClass="ButtonCustom" customModule="Weather" customModuleProvider="target">
+                                        <rect key="frame" x="57" y="416.5" width="300" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="8w0-j4-4G1"/>
+                                            <constraint firstAttribute="height" constant="50" id="nfQ-5m-Stw"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Ок"/>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                <color key="value" systemColor="systemYellowColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="25"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="YWU-WB-gnf" appends="YES" id="38F-Na-L3k"/>
+                                        </connections>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyN-H3-u8P" customClass="ButtonCustom" customModule="Weather" customModuleProvider="target">
+                                        <rect key="frame" x="57" y="608.5" width="300" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="csS-SD-ojX"/>
+                                            <constraint firstAttribute="height" constant="50" id="xvz-4s-2ct"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                <color key="value" systemColor="systemYellowColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="25"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="Current location"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="KJp-3G-Pge" appends="YES" id="K3J-Lf-Zxy"/>
+                                        </connections>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jf4-hK-04Z" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
+                                        <rect key="frame" x="172" y="349.5" width="70" height="70"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="70" id="Jiw-qs-8xT"/>
+                                            <constraint firstAttribute="height" constant="70" id="ugd-Yw-QKm"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="ballTrianglePath"/>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Jf4-hK-04Z" firstAttribute="centerY" secondItem="1Vv-OI-k2Z" secondAttribute="centerY" id="6bi-Oa-ylR"/>
+                                    <constraint firstItem="SDO-wq-zmS" firstAttribute="top" secondItem="QKn-bv-LE4" secondAttribute="bottom" constant="40" id="Hq9-dY-2GA"/>
+                                    <constraint firstItem="SDO-wq-zmS" firstAttribute="centerX" secondItem="1Vv-OI-k2Z" secondAttribute="centerX" id="JD8-1t-AHP"/>
+                                    <constraint firstItem="XrZ-u9-Adr" firstAttribute="centerX" secondItem="1Vv-OI-k2Z" secondAttribute="centerX" id="Rac-70-t62"/>
+                                    <constraint firstItem="dzA-TT-G2c" firstAttribute="leading" secondItem="1Vv-OI-k2Z" secondAttribute="leading" constant="30" id="ZB8-ea-fpc"/>
+                                    <constraint firstItem="Jf4-hK-04Z" firstAttribute="centerX" secondItem="1Vv-OI-k2Z" secondAttribute="centerX" id="aW1-2y-SxA"/>
+                                    <constraint firstItem="dzA-TT-G2c" firstAttribute="top" secondItem="1Vv-OI-k2Z" secondAttribute="top" constant="60" id="jhO-ui-cCT"/>
+                                    <constraint firstItem="XrZ-u9-Adr" firstAttribute="top" secondItem="SDO-wq-zmS" secondAttribute="bottom" constant="40" id="k3H-Dc-ghG"/>
+                                    <constraint firstItem="lyN-H3-u8P" firstAttribute="top" secondItem="XrZ-u9-Adr" secondAttribute="bottom" constant="40" id="lJf-0x-nXR"/>
+                                    <constraint firstItem="QKn-bv-LE4" firstAttribute="top" secondItem="dzA-TT-G2c" secondAttribute="bottom" constant="190" id="nUn-sv-lbF"/>
+                                    <constraint firstItem="QKn-bv-LE4" firstAttribute="centerX" secondItem="1Vv-OI-k2Z" secondAttribute="centerX" id="o1A-0R-RLU"/>
+                                    <constraint firstItem="lyN-H3-u8P" firstAttribute="centerX" secondItem="1Vv-OI-k2Z" secondAttribute="centerX" id="qii-Q4-nOi"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="IDp-iK-lTZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="9c7-sk-IVi"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1Vv-OI-k2Z" secondAttribute="trailing" id="JJ2-uN-tPI"/>
+                            <constraint firstAttribute="bottom" secondItem="IDp-iK-lTZ" secondAttribute="bottom" id="LBI-yw-Sbc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IDp-iK-lTZ" secondAttribute="trailing" id="f6g-Tl-tT3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1Vv-OI-k2Z" secondAttribute="bottom" id="oF3-vB-zZD"/>
+                            <constraint firstItem="1Vv-OI-k2Z" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="p3g-m5-lbr"/>
+                            <constraint firstItem="IDp-iK-lTZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="thJ-BR-Mqf"/>
+                            <constraint firstItem="1Vv-OI-k2Z" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="y3A-hB-mVG"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Weather" image="cloud.sun.fill" catalog="system" id="Sm1-Ky-iTo"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="Jf4-hK-04Z" id="oeF-eP-2Ae"/>
+                        <outlet property="bgImageView" destination="IDp-iK-lTZ" id="rFi-Lx-OvV"/>
+                        <outlet property="buttonCurrentLocation" destination="lyN-H3-u8P" id="EPm-Iv-FH3"/>
+                        <outlet property="buttonOk" destination="SDO-wq-zmS" id="GM6-kW-RJ8"/>
+                        <outlet property="enterCityTextField" destination="nbs-7t-MnU" id="Cc8-Gy-5pH"/>
+                        <outlet property="orLabel" destination="XrZ-u9-Adr" id="gid-gk-aAR"/>
+                        <outlet property="weatherLabel" destination="dzA-TT-G2c" id="6xT-Zt-lCQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="KJp-3G-Pge" userLabel="CurrentLocationTap Gesture Recognizer">
+                    <connections>
+                        <action selector="currentLocationButtonTapAction:" destination="BYZ-38-t0r" id="pNd-NK-LMk"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="YWU-WB-gnf" userLabel="OkTap Gesture Recognizer">
+                    <connections>
+                        <action selector="okButtonTapAction:" destination="BYZ-38-t0r" id="py8-pT-ilb"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="928.98550724637687" y="60.9375"/>
+        </scene>
+    </scenes>
+    <designables>
+        <designable name="dzA-TT-G2c">
+            <size key="intrinsicContentSize" width="257.5" height="76.5"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="bgWeather" width="3670" height="4893"/>
+        <image name="cloud.sun.fill" catalog="system" width="128" height="95"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

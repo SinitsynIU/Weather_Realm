@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  Weather
+
+  Created by Илья Синицын on 29.03.2022.
+  
+*/
+// News
+"tabBarItem_title_news" = "Новости";
+// Weather
+"enterCityTextField_placeholder" = "Введите город";
+"orLabel_text" = "или";
+"useCurrentLocationButton_titleLabel" = "Текущяя локация";
+"tabBarItem_title_weather" = "Погода";
+"pressureLabel_text" = "Давление %d";
+"humidityLabel_text" = "Влажность %d";
+"windSpeedLabel_text" = "Скорость ветра %.2f";
+"showAlertOkButtonTap" = "Город не найден!";
+"showAlertCurrentLocButtonTap" = "Координаты не определены!";
+// Map
+"tabBarItem_title_map" = "Карта";
+// History
+"tabBarItem_title_history" = "Истории запросов";
+"segmentedIndex0_title_history" = "Город";
+"segmentedIndex1_title_history" = "Карта";
+"clearBDButton_text_history" = "Очистить";

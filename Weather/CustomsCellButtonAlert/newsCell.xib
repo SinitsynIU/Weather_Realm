@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" rowHeight="126" id="KGk-i7-Jjw" customClass="newsCell" customModule="Weather" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="413" height="126"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="413" height="126"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Oyg-Ok-TNN">
+                        <rect key="frame" x="3" y="3" width="120" height="120"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="120" id="CoX-Da-fwB"/>
+                            <constraint firstAttribute="width" constant="120" id="el9-3y-5hV"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMS-Z8-xeS">
+                        <rect key="frame" x="126" y="3" width="284" height="27.5"/>
+                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="25"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="cO6-jW-s8X">
+                        <rect key="frame" x="126" y="33.5" width="284" height="24"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Oyg-Ok-TNN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="2nC-62-Pwl"/>
+                    <constraint firstItem="Oyg-Ok-TNN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="3" id="CuK-cq-Dk5"/>
+                    <constraint firstItem="cO6-jW-s8X" firstAttribute="leading" secondItem="Oyg-Ok-TNN" secondAttribute="trailing" constant="3" id="GSm-WU-48r"/>
+                    <constraint firstAttribute="bottom" secondItem="Oyg-Ok-TNN" secondAttribute="bottom" constant="3" id="UaK-K7-2PX"/>
+                    <constraint firstItem="vMS-Z8-xeS" firstAttribute="leading" secondItem="Oyg-Ok-TNN" secondAttribute="trailing" constant="3" id="hFw-yI-WSu"/>
+                    <constraint firstItem="vMS-Z8-xeS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="ix3-5e-k7a"/>
+                    <constraint firstAttribute="trailing" secondItem="cO6-jW-s8X" secondAttribute="trailing" constant="3" id="m2e-ge-9aY"/>
+                    <constraint firstAttribute="trailing" secondItem="vMS-Z8-xeS" secondAttribute="trailing" constant="3" id="sld-pW-LZK"/>
+                    <constraint firstItem="cO6-jW-s8X" firstAttribute="top" secondItem="vMS-Z8-xeS" secondAttribute="bottom" constant="3" id="yuR-bg-Bgj"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="authorImageView" destination="Oyg-Ok-TNN" id="XE4-lX-tGt"/>
+                <outlet property="cell" destination="H2p-sc-9uM" id="vDk-2V-3ar"/>
+                <outlet property="resourceLabel" destination="vMS-Z8-xeS" id="TJf-Ju-PwY"/>
+                <outlet property="titleLabel" destination="cO6-jW-s8X" id="Hyz-S2-Qln"/>
+            </connections>
+            <point key="canvasLocation" x="415.21739130434787" y="-22.098214285714285"/>
+        </tableViewCell>
+    </objects>
+</document>

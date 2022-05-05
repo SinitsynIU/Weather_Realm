@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Weather Current View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController id="Y6W-OH-hqX" customClass="WeatherCurrentViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gic-O0-h20">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cip-FW-acr" customClass="AnimationView" customModule="Lottie">
+                                        <rect key="frame" x="354" y="10" width="50" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="LUE-87-1Zk"/>
+                                            <constraint firstAttribute="height" constant="50" id="wdQ-zZ-F7O"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="delete"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="0X6-b8-adu" appends="YES" id="sKR-OX-GxD"/>
+                                        </connections>
+                                    </view>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JfT-VH-W1F">
+                                        <rect key="frame" x="20" y="163" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="WzX-fF-P58"/>
+                                            <constraint firstAttribute="width" constant="100" id="e25-qI-hTb"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 *C" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qad-jI-BDO">
+                                        <rect key="frame" x="128" y="163" width="158" height="54.5"/>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="50"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country, City" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="cvE-XX-6v7">
+                                        <rect key="frame" x="20" y="77.5" width="374" height="65.5"/>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="60"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="min/max temp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="bKK-Az-bek">
+                                        <rect key="frame" x="130" y="224.5" width="264" height="38.5"/>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="35"/>
+                                        <color key="textColor" red="0.99373358488082886" green="0.60213136672973633" blue="0.008893599733710289" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="main" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="oSK-Kw-Xc3">
+                                        <rect key="frame" x="20" y="283" width="374" height="38.5"/>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="35"/>
+                                        <color key="textColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pressure" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSL-WM-ekL">
+                                        <rect key="frame" x="20" y="341.5" width="374" height="33"/>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="30"/>
+                                        <color key="textColor" systemColor="tintColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="humidity" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCy-zx-FAq">
+                                        <rect key="frame" x="20" y="384.5" width="374" height="33"/>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="30"/>
+                                        <color key="textColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wind speed" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="svv-Tx-42U">
+                                        <rect key="frame" x="20" y="427.5" width="374" height="33"/>
+                                        <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="30"/>
+                                        <color key="textColor" systemColor="systemYellowColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="DSL-WM-ekL" firstAttribute="top" secondItem="oSK-Kw-Xc3" secondAttribute="bottom" constant="20" id="1UT-Pd-3cF"/>
+                                    <constraint firstItem="cvE-XX-6v7" firstAttribute="centerX" secondItem="gic-O0-h20" secondAttribute="centerX" id="2HE-Af-iab"/>
+                                    <constraint firstAttribute="trailing" secondItem="cvE-XX-6v7" secondAttribute="trailing" constant="20" id="2Ic-TK-YNE"/>
+                                    <constraint firstItem="oSK-Kw-Xc3" firstAttribute="top" secondItem="JfT-VH-W1F" secondAttribute="bottom" constant="20" id="3dK-hX-4ez"/>
+                                    <constraint firstItem="oSK-Kw-Xc3" firstAttribute="leading" secondItem="gic-O0-h20" secondAttribute="leading" constant="20" symbolic="YES" id="8DS-Ut-wll"/>
+                                    <constraint firstItem="cvE-XX-6v7" firstAttribute="top" secondItem="gic-O0-h20" secondAttribute="top" constant="77.5" id="C4E-Ux-hrC"/>
+                                    <constraint firstItem="Cip-FW-acr" firstAttribute="top" secondItem="gic-O0-h20" secondAttribute="top" constant="10" id="C8c-IL-QgD"/>
+                                    <constraint firstItem="JfT-VH-W1F" firstAttribute="top" secondItem="cvE-XX-6v7" secondAttribute="bottom" constant="20" id="DWc-XL-zR4"/>
+                                    <constraint firstAttribute="trailing" secondItem="Cip-FW-acr" secondAttribute="trailing" constant="10" id="DtC-Fs-cYb"/>
+                                    <constraint firstAttribute="trailing" secondItem="bKK-Az-bek" secondAttribute="trailing" constant="20" symbolic="YES" id="FrF-or-36v"/>
+                                    <constraint firstAttribute="trailing" secondItem="QCy-zx-FAq" secondAttribute="trailing" constant="20" symbolic="YES" id="Lkt-0V-yFF"/>
+                                    <constraint firstItem="svv-Tx-42U" firstAttribute="leading" secondItem="QCy-zx-FAq" secondAttribute="leading" id="Mbk-91-ed1"/>
+                                    <constraint firstItem="QCy-zx-FAq" firstAttribute="leading" secondItem="DSL-WM-ekL" secondAttribute="leading" id="O0O-7N-FWe"/>
+                                    <constraint firstItem="DSL-WM-ekL" firstAttribute="leading" secondItem="gic-O0-h20" secondAttribute="leading" constant="20" id="U0f-jw-Pv6"/>
+                                    <constraint firstItem="Qad-jI-BDO" firstAttribute="leading" secondItem="JfT-VH-W1F" secondAttribute="trailing" constant="8" symbolic="YES" id="WZr-l8-mk0"/>
+                                    <constraint firstItem="oSK-Kw-Xc3" firstAttribute="centerX" secondItem="gic-O0-h20" secondAttribute="centerX" id="doD-Av-bUH"/>
+                                    <constraint firstAttribute="trailing" secondItem="oSK-Kw-Xc3" secondAttribute="trailing" constant="20" symbolic="YES" id="eq3-mN-4rk"/>
+                                    <constraint firstItem="DSL-WM-ekL" firstAttribute="leading" secondItem="oSK-Kw-Xc3" secondAttribute="leading" id="hAi-mc-2oC"/>
+                                    <constraint firstItem="QCy-zx-FAq" firstAttribute="top" secondItem="DSL-WM-ekL" secondAttribute="bottom" constant="10" id="hlJ-Sk-yS1"/>
+                                    <constraint firstAttribute="trailing" secondItem="DSL-WM-ekL" secondAttribute="trailing" constant="20" symbolic="YES" id="i0I-xp-abC"/>
+                                    <constraint firstItem="JfT-VH-W1F" firstAttribute="leading" secondItem="gic-O0-h20" secondAttribute="leading" constant="20" id="ibF-h6-XO2"/>
+                                    <constraint firstItem="Qad-jI-BDO" firstAttribute="top" secondItem="JfT-VH-W1F" secondAttribute="top" id="jRX-Y6-W4b"/>
+                                    <constraint firstItem="bKK-Az-bek" firstAttribute="leading" secondItem="JfT-VH-W1F" secondAttribute="trailing" constant="10" id="lnd-x2-3Vn"/>
+                                    <constraint firstItem="bKK-Az-bek" firstAttribute="bottom" secondItem="JfT-VH-W1F" secondAttribute="bottom" id="mKl-wP-qAb"/>
+                                    <constraint firstItem="Qad-jI-BDO" firstAttribute="centerX" secondItem="gic-O0-h20" secondAttribute="centerX" id="mda-b0-Pxf"/>
+                                    <constraint firstItem="cvE-XX-6v7" firstAttribute="leading" secondItem="gic-O0-h20" secondAttribute="leading" constant="20" id="ou8-Qk-cNK"/>
+                                    <constraint firstAttribute="trailing" secondItem="svv-Tx-42U" secondAttribute="trailing" constant="20" symbolic="YES" id="tCh-fh-CMR"/>
+                                    <constraint firstItem="svv-Tx-42U" firstAttribute="top" secondItem="QCy-zx-FAq" secondAttribute="bottom" constant="10" id="wAK-5L-dmA"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="gic-O0-h20" secondAttribute="trailing" id="8iR-Oz-Xv8"/>
+                            <constraint firstItem="gic-O0-h20" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="PWm-3T-gHh"/>
+                            <constraint firstItem="gic-O0-h20" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="ezF-4g-eLE"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="gic-O0-h20" secondAttribute="bottom" id="ss2-XH-ni9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeView" destination="Cip-FW-acr" id="P9d-jL-Cdg"/>
+                        <outlet property="countryCityLabel" destination="cvE-XX-6v7" id="WHS-qs-7qD"/>
+                        <outlet property="humidityLabel" destination="QCy-zx-FAq" id="f1T-J6-GDR"/>
+                        <outlet property="minMaxTempLabel" destination="bKK-Az-bek" id="CxM-cO-ejc"/>
+                        <outlet property="pressureLabel" destination="DSL-WM-ekL" id="Ozd-Kr-kbh"/>
+                        <outlet property="tempLabel" destination="Qad-jI-BDO" id="X61-q1-HL1"/>
+                        <outlet property="weatherImageView" destination="JfT-VH-W1F" id="69c-Oj-B14"/>
+                        <outlet property="weatherMainLabel" destination="oSK-Kw-Xc3" id="QYf-Yd-yEA"/>
+                        <outlet property="windSpeedLabel" destination="svv-Tx-42U" id="795-K4-oPt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="0X6-b8-adu">
+                    <connections>
+                        <action selector="closeVCTapActions:" destination="Y6W-OH-hqX" id="DhU-LU-sjZ"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="89.855072463768124" y="60.9375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

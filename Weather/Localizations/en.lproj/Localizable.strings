@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  Weather
+
+  Created by Илья Синицын on 29.03.2022.
+  
+*/
+// News
+"tabBarItem_title_news" = "News";
+// Weather
+"enterCityTextField_placeholder" = "Enther city";
+"orLabel_text" = "or";
+"useCurrentLocationButton_titleLabel" = "Сurrent location";
+"tabBarItem_title_weather" = "Weather";
+"pressureLabel_text" = "Pressure %d";
+"humidityLabel_text" = "Humidity %d";
+"windSpeedLabel_text" = "Wind speed %.2f";
+"showAlertOkButtonTap" = "City not found!";
+"showAlertCurrentLocButtonTap" = "Coordinates are not defined!";
+// Map
+"tabBarItem_title_map" = "Map";
+// History
+"tabBarItem_title_history" = "History request";
+"segmentedIndex0_title_history" = "City";
+"segmentedIndex1_title_history" = "Map";
+"clearBDButton_text_history" = "Clear";

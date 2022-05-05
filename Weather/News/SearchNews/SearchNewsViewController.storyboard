@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oIf-9w-qgC">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--SearchNews-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="SearchNewsViewController" id="Y6W-OH-hqX" userLabel="SearchNews" customClass="SearchNewsViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgNews" translatesAutoresizingMaskIntoConstraints="NO" id="0Uz-so-Frf">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="peg-5j-mpD">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhe-qg-KCs" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
+                                <rect key="frame" x="172" y="413" width="70" height="70"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="GTl-bB-QBt"/>
+                                    <constraint firstAttribute="height" constant="70" id="VwP-SK-aGZ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="ballTrianglePath"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="dhe-qg-KCs" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="07d-JI-dgS"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="peg-5j-mpD" secondAttribute="trailing" id="MPS-h5-LZy"/>
+                            <constraint firstItem="0Uz-so-Frf" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="U5f-5m-vlN"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="peg-5j-mpD" secondAttribute="bottom" id="W3C-j8-Cr9"/>
+                            <constraint firstItem="dhe-qg-KCs" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="aEZ-jO-nFl"/>
+                            <constraint firstItem="0Uz-so-Frf" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="iys-p3-1Jd"/>
+                            <constraint firstItem="0Uz-so-Frf" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="mN0-eR-AgY"/>
+                            <constraint firstItem="peg-5j-mpD" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="tBN-Bj-aAb"/>
+                            <constraint firstItem="peg-5j-mpD" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="vnc-rk-Scz"/>
+                            <constraint firstAttribute="bottom" secondItem="0Uz-so-Frf" secondAttribute="bottom" id="w1G-jr-56f"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="News" id="xFb-k6-a2s">
+                        <imageReference key="image" image="newspaper.fill" catalog="system" symbolScale="large"/>
+                    </tabBarItem>
+                    <navigationItem key="navigationItem" title="News" id="bEy-IK-bV2" colorLabel="IBBuiltInLabel-Gray"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="dhe-qg-KCs" id="F2Y-sd-E2i"/>
+                        <outlet property="newsTabelView" destination="peg-5j-mpD" id="PXJ-oG-pe4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="976.81159420289862" y="57.589285714285708"/>
+        </scene>
+        <!--SearchNews-->
+        <scene sceneID="gTd-MT-IVT">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oIf-9w-qgC" userLabel="SearchNews" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" tag="3" title="News" id="5vE-1Q-6XM" colorLabel="IBBuiltInLabel-Gray">
+                        <imageReference key="image" image="newspaper.fill" catalog="system" symbolScale="large"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lje-qD-zrn">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="70"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="clC-0x-mid"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="luu-1N-KtZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="66.666666666666671" y="57.589285714285708"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="bgNews" width="2667" height="4000"/>
+        <image name="newspaper.fill" catalog="system" width="128" height="111"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

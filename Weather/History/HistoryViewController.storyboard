@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--History-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController id="Y6W-OH-hqX" customClass="HistoryViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgWeather" translatesAutoresizingMaskIntoConstraints="NO" id="VNY-hK-NTd">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History request" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcs-kF-yme" customClass="UIlabel">
+                                <rect key="frame" x="54" y="64" width="306.5" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="xNv-4P-bFU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="48"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y6Y-Gp-bOR">
+                                <rect key="frame" x="82" y="124" width="250" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="b0N-bi-AVs"/>
+                                    <constraint firstAttribute="height" constant="35" id="qQ8-GE-ulF"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="по городу"/>
+                                    <segment title="по координатам"/>
+                                </segments>
+                                <connections>
+                                    <action selector="historySegmentedControlAction:" destination="Y6W-OH-hqX" eventType="valueChanged" id="ciM-C5-7e5"/>
+                                </connections>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7hL-K3-xbe">
+                                <rect key="frame" x="0.0" y="169" width="414" height="579"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cG8-Dy-64E" customClass="ButtonCustom" customModule="Weather" customModuleProvider="target">
+                                <rect key="frame" x="57" y="758" width="300" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="JND-mj-Nbw"/>
+                                    <constraint firstAttribute="width" constant="300" id="gi2-Ij-V7Y"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                        <color key="value" systemColor="systemYellowColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="25"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="text" value="Очистить"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="ydl-lo-9Pk" appends="YES" id="YPz-ev-Z3Z"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Lcs-kF-yme" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="3fd-VG-n5s"/>
+                            <constraint firstItem="Lcs-kF-yme" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="DSr-Df-p0C"/>
+                            <constraint firstItem="VNY-hK-NTd" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="K9M-3m-k6c"/>
+                            <constraint firstItem="7hL-K3-xbe" firstAttribute="top" secondItem="Y6Y-Gp-bOR" secondAttribute="bottom" constant="10" id="cY8-ID-YVT"/>
+                            <constraint firstItem="VNY-hK-NTd" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="eRh-wL-gqS"/>
+                            <constraint firstItem="7hL-K3-xbe" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="hP3-Kx-MSM"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="7hL-K3-xbe" secondAttribute="trailing" id="lSN-kk-qQN"/>
+                            <constraint firstItem="Y6Y-Gp-bOR" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="ldH-61-z3K"/>
+                            <constraint firstItem="cG8-Dy-64E" firstAttribute="top" secondItem="7hL-K3-xbe" secondAttribute="bottom" constant="10" id="mco-V0-T89"/>
+                            <constraint firstItem="cG8-Dy-64E" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="sTZ-Xi-Tjk"/>
+                            <constraint firstAttribute="bottom" secondItem="VNY-hK-NTd" secondAttribute="bottom" id="sVy-YW-lCj"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="cG8-Dy-64E" secondAttribute="bottom" constant="5" id="sdh-oC-7hT"/>
+                            <constraint firstItem="Y6Y-Gp-bOR" firstAttribute="top" secondItem="Lcs-kF-yme" secondAttribute="bottom" constant="10" id="tep-gD-pVN"/>
+                            <constraint firstItem="VNY-hK-NTd" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="zhi-aP-rtr"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="History" image="tray.full.fill" catalog="system" id="T8a-gc-JqA"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="clearBDButton" destination="cG8-Dy-64E" id="w3Y-l1-h1e"/>
+                        <outlet property="historyBgImage" destination="VNY-hK-NTd" id="yuS-GG-q5W"/>
+                        <outlet property="historyLabel" destination="Lcs-kF-yme" id="NI7-sm-lIK"/>
+                        <outlet property="historySegmentedControl" destination="Y6Y-Gp-bOR" id="kVd-b9-LFr"/>
+                        <outlet property="historyTabelView" destination="7hL-K3-xbe" id="8Gg-l0-eEI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ydl-lo-9Pk">
+                    <connections>
+                        <action selector="ClearBDAction:" destination="Y6W-OH-hqX" id="Kn0-Ve-62X"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="24.637681159420293" y="63.616071428571423"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="bgWeather" width="3670" height="4893"/>
+        <image name="tray.full.fill" catalog="system" width="128" height="88"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
