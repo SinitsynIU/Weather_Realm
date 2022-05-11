@@ -14,6 +14,8 @@ class OnboardingViewController: UIViewController {
     @IBOutlet weak var activityIndicatorView: NVActivityIndicatorView!
     @IBOutlet weak var loadingLabel: UILabel!
     
+    let group = DispatchGroup()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.overrideUserInterfaceStyle = .light
@@ -24,10 +26,10 @@ class OnboardingViewController: UIViewController {
         MediaManager.shared.playerAudioPlay()
         MediaManager.shared.playerVideoPlay()
         
-        
+        group.enter()
         RemoteConfigureManager.shared.connectToFirebase { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self?.pushVC()
+                self?.stopAnimations()
                 self?.configureTabBarController()
             }
         }
@@ -37,7 +39,7 @@ class OnboardingViewController: UIViewController {
         MediaManager.shared.clearMediaPlayer()
     }
     
-    private func pushVC() {
+    private func stopAnimations() {
         activityIndicatorView.stopAnimating()
         UIView.animate(withDuration: 0.5){
             self.loadingLabel.alpha = 0
