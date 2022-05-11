@@ -28,15 +28,17 @@ class OnboardingViewController: UIViewController {
         
         group.enter()
         RemoteConfigureManager.shared.connectToFirebase { [weak self] in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self?.stopAnimations()
-                self?.configureTabBarController()
-            }
+            self?.group.leave()
+        }
+       
+        group.notify(queue: .main) { [weak self] in
+            self?.stopAnimations()
+            self?.configureTabBarController()
         }
     }
     
     deinit {
-        MediaManager.shared.clearMediaPlayer()
+        MediaManagershared.clearMediaPlayer()
     }
     
     private func stopAnimations() {
