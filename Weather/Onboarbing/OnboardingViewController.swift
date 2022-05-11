@@ -38,7 +38,7 @@ class OnboardingViewController: UIViewController {
     }
     
     deinit {
-        MediaManagershared.clearMediaPlayer()
+        MediaManager.shared.clearMediaPlayer()
     }
     
     private func stopAnimations() {
