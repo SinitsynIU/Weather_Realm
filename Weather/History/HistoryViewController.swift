@@ -91,7 +91,6 @@ class HistoryViewController: UIViewController {
         historySegmentedControl.setTitle(NSLocalizedString("segmentedIndex0_title_history", comment: ""), forSegmentAt: 0)
         historySegmentedControl.setTitle(NSLocalizedString("segmentedIndex1_title_history", comment: ""), forSegmentAt: 1)
         clearBDButton.text = NSLocalizedString("clearBDButton_text_history", comment: "")
-    
     }
     
     private func fetchRequest() {
