@@ -21,6 +21,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="hw8-cq-zZH" customClass="GADBannerView">
+                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="1Yb-1g-FMd"/>
+                                </constraints>
+                            </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="navi" translatesAutoresizingMaskIntoConstraints="NO" id="aGp-5G-aA3">
                                 <rect key="frame" x="182" y="423" width="50" height="50"/>
                                 <constraints>
@@ -29,7 +36,7 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iFH-je-ApT">
-                                <rect key="frame" x="8" y="44" width="159" height="76"/>
+                                <rect key="frame" x="8" y="97" width="159" height="76"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FXG-B1-XfU">
                                         <rect key="frame" x="8" y="8" width="60" height="60"/>
@@ -61,7 +68,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xnq-oG-xp1">
-                                <rect key="frame" x="8" y="123" width="398" height="70"/>
+                                <rect key="frame" x="8" y="176" width="398" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="country, locality, name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbN-KP-kfi">
                                         <rect key="frame" x="8" y="8" width="382" height="23"/>
@@ -92,14 +99,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Uc0-M1-uSf" secondAttribute="bottom" id="BcH-jB-O4s"/>
+                            <constraint firstItem="hw8-cq-zZH" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="JCa-gv-KzN"/>
+                            <constraint firstItem="iFH-je-ApT" firstAttribute="top" secondItem="hw8-cq-zZH" secondAttribute="bottom" constant="3" id="OhB-7T-1lZ"/>
                             <constraint firstItem="aGp-5G-aA3" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="VXj-B9-2pv"/>
                             <constraint firstItem="Uc0-M1-uSf" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="WIh-jk-xQn"/>
+                            <constraint firstItem="hw8-cq-zZH" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="WMm-BG-1HB"/>
                             <constraint firstItem="Uc0-M1-uSf" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Y1k-pM-Kny"/>
                             <constraint firstItem="Uc0-M1-uSf" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="cad-bD-15Y"/>
                             <constraint firstItem="aGp-5G-aA3" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="hKs-cM-ykg"/>
                             <constraint firstItem="iFH-je-ApT" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="8" id="iPY-w1-dFM"/>
-                            <constraint firstItem="iFH-je-ApT" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="jK0-Zg-2pb"/>
                             <constraint firstItem="xnq-oG-xp1" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="8" id="oKO-bc-ovj"/>
+                            <constraint firstItem="hw8-cq-zZH" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="tVn-66-eQL"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="xnq-oG-xp1" secondAttribute="trailing" constant="8" id="x6x-7z-u9F"/>
                             <constraint firstItem="xnq-oG-xp1" firstAttribute="top" secondItem="iFH-je-ApT" secondAttribute="bottom" constant="3" id="yZK-la-alZ"/>
                         </constraints>
@@ -109,6 +119,7 @@
                     </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="bannerView" destination="hw8-cq-zZH" id="OuK-WT-jVG"/>
                         <outlet property="mapView" destination="Uc0-M1-uSf" id="Yeg-pk-NSu"/>
                         <outlet property="placemarkCountryLocalityName" destination="jbN-KP-kfi" id="pV4-Ot-I7l"/>
                         <outlet property="placemarkSubAdministrativeArea" destination="lw2-l5-JYv" id="qCt-mO-cia"/>

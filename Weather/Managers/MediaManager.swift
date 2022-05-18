@@ -11,7 +11,6 @@ class MediaManager {
     static let shared = MediaManager()
     
     enum ResourceBundleValues: String {
-        case loading
         case clear
         case rain
         case snow
@@ -77,7 +76,6 @@ class MediaManager {
         playerAudio = nil
         playerVideo?.pause()
         playerVideo = nil
-        
         backgroundVideoPlayerViewLayer?.removeFromSuperlayer()
         backgroundVideoPlayerViewLayer = nil
     }

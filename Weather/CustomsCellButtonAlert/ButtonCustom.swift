@@ -9,6 +9,7 @@ import UIKit
 
 @IBDesignable
 class ButtonCustom: UIView {
+    
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var textLabel: UILabel!
     

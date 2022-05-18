@@ -15,6 +15,9 @@ target 'Weather' do
   pod 'Firebase/Core'
   pod 'Firebase/RemoteConfig'
   pod 'lottie-ios'
+  pod 'Google-Mobile-Ads-SDK'
+  pod 'RxSwift'
+  pod 'RxCocoa'
   
   post_install do |installer|
     installer.pods_project.build_configurations.each do |config|

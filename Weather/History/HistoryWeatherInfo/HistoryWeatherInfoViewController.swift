@@ -8,7 +8,7 @@
 import UIKit
 import Lottie
 
-class WeatherCurrentViewController: UIViewController {
+class HistoryWeatherInfoViewController: UIViewController {
     
     @IBOutlet weak var closeView: AnimationView?
     @IBOutlet weak var countryCityLabel: UILabel!
@@ -20,13 +20,14 @@ class WeatherCurrentViewController: UIViewController {
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var minMaxTempLabel: UILabel!
     
-    var weatherJ: WeatherJSON?
+    var weatherJ: WeatherDB?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         closeView?.play()
         setupPlayerVideoBackground(weather: weatherJ, view: view)
-        setupUILocalization(weather: weatherJ)
+        self.overrideUserInterfaceStyle = .light
+        //setupUILocalization(weather: weatherJ)
     }
     
     deinit {
@@ -34,14 +35,14 @@ class WeatherCurrentViewController: UIViewController {
         MediaManager.shared.notificationRemove()
     }
     
-    private func setupPlayerVideoBackground(weather: WeatherJSON?, view: UIView) {
-        if weather?.weather.first?.main == "Clouds" {
+    private func setupPlayerVideoBackground(weather: WeatherDB?, view: UIView) {
+        if weather?.main == "Clouds" {
             MediaManager.shared.playerVideoSettings(bundleResource: MediaManager.ResourceBundleValues.clouds, view: view, notificationOn: true)
             MediaManager.shared.playerAudioSettings(bundleResource: .clouds, notificationOn: true)
-        } else if weather?.weather.first?.main == "Snow" {
+        } else if weather?.main == "Snow" {
             MediaManager.shared.playerVideoSettings(bundleResource: MediaManager.ResourceBundleValues.snow, view: view, notificationOn: true)
             MediaManager.shared.playerAudioSettings(bundleResource: .wind, notificationOn: true)
-        } else if weather?.weather.first?.main == "Rain" {
+        } else if weather?.main == "Rain" {
             MediaManager.shared.playerVideoSettings(bundleResource: MediaManager.ResourceBundleValues.rain, view: view, notificationOn: true)
             MediaManager.shared.playerAudioSettings(bundleResource: .rain, notificationOn: true)
         } else {
@@ -52,38 +53,24 @@ class WeatherCurrentViewController: UIViewController {
         MediaManager.shared.playerAudioPlay()
     }
     
-    private func setupUILocalization(weather: WeatherJSON?) {
-        self.overrideUserInterfaceStyle = .light
-        countryCityLabel.text = "\(weather?.name ?? ""), \(weather?.sys.country ?? "")"
-        tempLabel.text = "\(Int(weather?.main.temp ?? 0))°С"
-        minMaxTempLabel.text = "\(Int(weather?.main.tempMin ?? 0)) min°С / \(Int(weather?.main.tempMax ?? 0)) max°С"
-        weatherMainLabel.text = weather?.weather.first?.weatherDescription ?? ""
-        pressureLabel.text = getLocalizeStringIntString(withString: NSLocalizedString("pressureLabel_text", comment: ""), withInt: (weather?.main.pressure ?? 0), otherString: " hPa")
-        humidityLabel.text = getLocalizeStringIntString(withString: NSLocalizedString("humidityLabel_text", comment: ""), withInt: (weather?.main.humidity ?? 0), otherString: " %")
-        windSpeedLabel.text = getLocalizeStringDoubleString(withString: NSLocalizedString("windSpeedLabel_text", comment: ""), withDouble: (weather?.wind.speed ?? 0), otherString: " m/sec")
-        var icon: String
-        icon = weather?.weather.first?.icon ?? ""
-        FileServiceManager.shared.getWeatherImage(icon: icon, completed: { [weak self] image in
-            self?.weatherImageView.image = image
-        })
-    }
+//    private func setupUILocalization(weather: WeatherDB?) {
+//        countryCityLabel.text = "\(weather?.name ?? ""), \(weather?.sys.country ?? "")"
+//        tempLabel.text = "\(Int(weather?.main.temp ?? 0))°С"
+//        minMaxTempLabel.text = "\(Int(weather?.main.tempMin ?? 0)) min°С / \(Int(weather?.main.tempMax ?? 0)) max°С"
+//        weatherMainLabel.text = weather?.weather.first?.weatherDescription ?? ""
+//        pressureLabel.text = getLocalizeStringIntString(withString: NSLocalizedString("pressureLabel_text", comment: ""), withInt: (weather?.main.pressure ?? 0), otherString: " hPa")
+//        humidityLabel.text = getLocalizeStringIntString(withString: NSLocalizedString("humidityLabel_text", comment: ""), withInt: (weather?.main.humidity ?? 0), otherString: " %")
+//        windSpeedLabel.text = getLocalizeStringDoubleString(withString: NSLocalizedString("windSpeedLabel_text", comment: ""), withDouble: (weather?.wind.speed ?? 0), otherString: " m/sec")
+//        var icon: String
+//        icon = weather?.weather.first?.icon ?? ""
+//        FileServiceManager.shared.getWeatherImage(icon: icon, completed: { [weak self] image in
+//            self?.weatherImageView.image = image
+//        })
+ //   }
     
     @IBAction func closeVCTapActions(_ sender: Any) {
         MediaManager.shared.playerAudioSettings(bundleResource: MediaManager.ResourceBundleValues.close, notificationOn: false)
         MediaManager.shared.playerAudioPlay()
         dismiss(animated: true)
-    }
-}
-
-extension UIViewController {
-    
-    func getLocalizeStringIntString(withString: String, withInt: Int, otherString: String) -> String? {
-        let newString = String(format: withString, withInt) + otherString
-        return newString
-    }
-    
-    func getLocalizeStringDoubleString(withString: String, withDouble: Double, otherString: String) -> String? {
-        let newString = String(format: withString, withDouble) + otherString
-        return newString
     }
 }

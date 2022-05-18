@@ -14,7 +14,6 @@ class PostNewsViewController: UIViewController {
     @IBOutlet weak var closeView: AnimationView!
     @IBOutlet weak var posterView: UIView!
     @IBOutlet weak var publishedLabel: UILabel!
-    @IBOutlet weak var viewBg: UIView!
     @IBOutlet weak var posterBgImageView: UIImageView!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var resourceNameLabel: UILabel!
@@ -33,14 +32,13 @@ class PostNewsViewController: UIViewController {
     
     deinit {
         MediaManager.shared.clearMediaPlayer()
+        MediaManager.shared.notificationRemove()
     }
     
     private func setupUI() {
         self.overrideUserInterfaceStyle = .light
         closeView.play()
         posterView.layer.cornerRadius = 50
-        viewBg.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        viewBg.layer.cornerRadius = 50
         posterBgImageView.layer.cornerRadius = 50
         posterBgImageView.backgroundColor = UIColor(white: 1, alpha: 0.5)
         posterImageView.layer.cornerRadius = 50

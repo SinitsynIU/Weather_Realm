@@ -8,10 +8,13 @@ import CoreLocation
 import UIKit
 import NVActivityIndicatorView
 import Lottie
+import GoogleMobileAds
 
 class EnterCityViewController: UIViewController, CLLocationManagerDelegate {
     
+    @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var weatherLabel: UILabel!
+    @IBOutlet weak var blur: UIVisualEffectView!
     @IBOutlet weak var activityIndicatorView: NVActivityIndicatorView!
     @IBOutlet weak var buttonOk: ButtonCustom!
     @IBOutlet weak var buttonCurrentLocation: ButtonCustom!
@@ -32,10 +35,6 @@ class EnterCityViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.stopUpdatingLocation()
-    }
-    
-    deinit {
-        MediaManager.shared.clearMediaPlayer()
     }
     
     func getCityData(city: String, onCompleted: @escaping(() -> ())) {
@@ -70,6 +69,8 @@ class EnterCityViewController: UIViewController, CLLocationManagerDelegate {
         self.overrideUserInterfaceStyle = .light
         enterCityTextField.layer.cornerRadius = 25
         enterCityTextField.layer.borderWidth = 1
+        blur.isHidden = true
+        blurView.center = view.center
     }
     
     private func setupLocalization() {
@@ -85,14 +86,24 @@ class EnterCityViewController: UIViewController, CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             activityIndicatorView.startAnimating()
             locationManager.startUpdatingLocation()
-            getCityData(city: enterCityTextField.text ?? "") {
-                if self.weather?.cod == 200 {
-                    self.activityIndicatorView.stopAnimating()
-                    self.pushWeatherCurrentViewController()
-                    self.enterCityTextField.text = nil
+            blur.isHidden = false
+            getCityData(city: enterCityTextField.text ?? "") { [weak self] in
+                if self?.weather?.cod == 200 {
+                    AdsManager.shared.setupRewarded(viewController: self!) {
+                        self?.activityIndicatorView.stopAnimating()
+                        self?.enterCityTextField.text = nil
+                        self?.blur.isHidden = true
+                    }  onError: { [weak self] in
+                        print("Failed to load rewarded ad with error")
+                        self?.activityIndicatorView.stopAnimating()
+                        self?.enterCityTextField.text = nil
+                        self?.blur.isHidden = true
+                        self?.pushWeatherCurrentViewController()
+                    }
                 } else {
-                    self.activityIndicatorView.stopAnimating()
-                    self.showAlert(with: NSLocalizedString("showAlertOkButtonTap", comment: ""))
+                    self?.activityIndicatorView.stopAnimating()
+                    self?.blur.isHidden = true
+                    self?.showAlert(with: NSLocalizedString("showAlertOkButtonTap", comment: ""))
                 }
             }
         }
@@ -104,13 +115,22 @@ class EnterCityViewController: UIViewController, CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             activityIndicatorView.startAnimating()
             locationManager.startUpdatingLocation()
-            getCoordCityData(lat: locationManager.location?.coordinate.latitude, lon: locationManager.location?.coordinate.longitude) {
-                if self.weather?.cod == 200 {
-                    self.activityIndicatorView.stopAnimating()
-                    self.pushWeatherCurrentViewController()
+            blur.isHidden = false
+            getCoordCityData(lat: locationManager.location?.coordinate.latitude, lon: locationManager.location?.coordinate.longitude) { [weak self] in
+                if self?.weather?.cod == 200 {
+                    AdsManager.shared.setupRewarded(viewController: self!) {
+                        self?.activityIndicatorView.stopAnimating()
+                        self?.enterCityTextField.text = nil
+                    } onError: {
+                        print("Failed to load rewarded ad with error")
+                        self?.activityIndicatorView.stopAnimating()
+                        self?.enterCityTextField.text = nil
+                        self?.pushWeatherCurrentViewController()
+                    }
                 } else {
-                    self.activityIndicatorView.stopAnimating()
-                    self.showAlert(with: NSLocalizedString("showAlertCurrentLocButtonTap", comment: ""))
+                    self?.activityIndicatorView.stopAnimating()
+                    self?.blur.isHidden = true
+                    self?.showAlert(with: NSLocalizedString("showAlertCurrentLocButtonTap", comment: ""))
                 }
             }
         }
@@ -121,8 +141,19 @@ class EnterCityViewController: UIViewController, CLLocationManagerDelegate {
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .flipHorizontal
             vc.weatherJ = weather
-            self.present(vc, animated: true, completion: nil)
+            self.present(vc, animated: true, completion: { [weak self] in
+                self?.blur.isHidden = true
+            })
         }
     }
 }
 
+extension EnterCityViewController: GADFullScreenContentDelegate {
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        pushWeatherCurrentViewController()
+    }
+    
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        pushWeatherCurrentViewController()
+    }
+}

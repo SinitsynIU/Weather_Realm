@@ -73,5 +73,4 @@ class CoreDataManager {
             print(e.localizedDescription)
         }
     }
-    
 }

@@ -7,15 +7,20 @@
 
 import UIKit
 import CoreData
+import RxCocoa
+import RxSwift
 
 class HistoryViewController: UIViewController {
+    
     @IBOutlet weak var historySegmentedControl: UISegmentedControl!
     @IBOutlet weak var clearBDButton: ButtonCustom!
     @IBOutlet weak var historyTabelView: UITableView!
     @IBOutlet weak var historyBgImage: UIImageView!
     @IBOutlet weak var historyLabel: UILabel!
     
+    //var weatherSubject = BehaviorSubject<WeatherDB>(value: WeatherDB())
     var fetchResultController: NSFetchedResultsController<WeatherDB>!
+    //let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +37,8 @@ class HistoryViewController: UIViewController {
         historyTabelView.reloadData()
     }
     
-    deinit {
+    override func viewDidDisappear(_ animated: Bool) {
+            super.viewDidDisappear(animated)
         MediaManager.shared.clearMediaPlayer()
     }
     
@@ -51,6 +57,33 @@ class HistoryViewController: UIViewController {
         historyTabelView.delegate = self
         historyTabelView.dataSource = self
         historyTabelView.register(UINib(nibName: "HistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "HistoryTableViewCell")
+        
+//        weatherSubject
+//            .bind(to: historyTabelView.rx.items(cellIdentifier: "HistoryTableViewCell", cellType: HistoryTableViewCell.self)) { index, model, cell in
+                
+           // let weatherDB = fetchResultController.object(at: model)
+//            cell.date = weatherDB.date
+//            cell.selectionStyle = .none
+//            cell.tempLabel.text = "\(Int(weatherDB.temp))°С"
+//            cell.containerActions.isHidden = true
+//            cell.deleteView?.play()
+//            if self.historySegmentedControl.selectedSegmentIndex == 0 {
+//                cell.coordinateLabel.text = nil
+//                cell.cityLabel.text = weatherDB.city
+//            } else {
+//                cell.coordinateLabel.text = "lat: \(weatherDB.lat), lon: \(weatherDB.lon)"
+//                cell.cityLabel.text = nil
+//            }
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
+//            let date: String =  dateFormatter.string(from: weatherDB.date ?? Date.now)
+//            cell.dateTimeLabel.text = "\(date)"
+//            let icon: String = weatherDB.icon ?? ""
+//                FileServiceManager.shared.getWeatherImage(icon: icon, completed: { image in
+//                    cell.historyTempImageView.image = image
+//                })
+                
+       // }.disposed(by: disposeBag)
     }
     
     private func setupLocalization() {
@@ -62,13 +95,11 @@ class HistoryViewController: UIViewController {
     
     private func fetchRequest() {
         let fetchRequest: NSFetchRequest<WeatherDB>
-
         if historySegmentedControl.selectedSegmentIndex == 0 {
             fetchRequest = WeatherDB.fetchRequest(source: SourceValues.city.rawValue)
         } else {
             fetchRequest = WeatherDB.fetchRequest(source: SourceValues.coordinate.rawValue)
         }
-
         let sort = NSSortDescriptor(key: "date", ascending: false)
         fetchRequest.sortDescriptors = [sort]
         fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataManager.shared.context, sectionNameKeyPath: nil, cacheName: nil)
@@ -92,12 +123,28 @@ class HistoryViewController: UIViewController {
 }
 
 extension HistoryViewController: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 126
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        //print(indexPath)
+
+//        let weatherDB = fetchResultController.object(at: indexPath)
+//        guard indexPath.section == 0 else { return }
+//        if let vc = UIStoryboard(name: "HistoryWeatherInfoViewController", bundle: nil).instantiateInitialViewController() as? HistoryWeatherInfoViewController {
+//            vc.modalPresentationStyle = .fullScreen
+//            vc.modalTransitionStyle = .flipHorizontal
+//            vc.weatherJ = weatherDB
+//            self.present(vc, animated: true, completion: nil)
+//        }
     }
 }
 
 extension HistoryViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if fetchResultController.sections?[section].numberOfObjects == 0 {
             clearBDButton.isHidden = true
@@ -106,10 +153,9 @@ extension HistoryViewController: UITableViewDataSource {
         }
         return fetchResultController.sections?[section].numberOfObjects ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryTableViewCell") as? HistoryTableViewCell else { return UITableViewCell() }
-        
         let weatherDB = fetchResultController.object(at: indexPath)
         cell.date = weatherDB.date
         cell.selectionStyle = .none
@@ -123,18 +169,14 @@ extension HistoryViewController: UITableViewDataSource {
             cell.coordinateLabel.text = "lat: \(weatherDB.lat), lon: \(weatherDB.lon)"
             cell.cityLabel.text = nil
         }
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
         let date: String =  dateFormatter.string(from: weatherDB.date ?? Date.now)
         cell.dateTimeLabel.text = "\(date)"
-        
         let icon: String = weatherDB.icon ?? ""
             FileServiceManager.shared.getWeatherImage(icon: icon, completed: { image in
                 cell.historyTempImageView.image = image
             })
-        
         return cell
     }
 }
-

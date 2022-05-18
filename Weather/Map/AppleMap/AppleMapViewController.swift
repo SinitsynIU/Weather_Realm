@@ -8,12 +8,15 @@
 
 import UIKit
 import MapKit
-import GoogleMaps
 import CoreLocation
 import Lottie
+import GoogleMobileAds
+import RxSwift
+import RxCocoa
 
 class AppleMapViewController: UIViewController {
     
+    @IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet weak var placemarkView: UIView!
     @IBOutlet weak var weatherView: UIView!
     @IBOutlet weak var weatherMyLocation: AnimationView?
@@ -25,7 +28,10 @@ class AppleMapViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     var weather: WeatherJSON? = nil
-    var timer: Timer?
+    let disposeBag = DisposeBag()
+    let subjectOnButton = BehaviorSubject<CLLocationCoordinate2D>(value: CLLocationCoordinate2D())
+    
+    let subjectOnMap = BehaviorSubject<CLLocationCoordinate2D>(value: CLLocationCoordinate2D())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,19 +40,58 @@ class AppleMapViewController: UIViewController {
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        weatherMyLocation?.play()
+        setupUIStart()
+        
+        AdsManager.shared.setupBunner(bannerView: bannerView, viewController: self)
+        
+        subjectOnButton
+            .debounce(DispatchTimeInterval.seconds(2), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { value in
+                self.mapView.setCenter(value, animated: true)
+        }).disposed(by: disposeBag)
+        
+        subjectOnMap
+            .debounce(DispatchTimeInterval.seconds(2), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { value in
+                self.weatherMyLocation?.pause()
+                    self.getCoordCityData(lat: value.latitude, lon: value.longitude, onCompleted: { [weak self] in
+                        self?.weatherMyLocation?.pause()
+                                self?.setupUI(weather: self?.weather)
+                                let geocoder = CLGeocoder()
+                                geocoder.reverseGeocodeLocation(CLLocation(
+                                                latitude: value.latitude,
+                                                longitude: value.longitude))                     { placemarks, error in
+                                if let error = error {
+                                    print(error.localizedDescription)
+                                }
+                                guard let placemark = placemarks?.first else { return }
+                                self?.placemarkCountryLocalityName.text = "\(placemark.country ?? "unknown"), \(placemark.locality ?? "unknown"), \(placemark.name ?? "unknown")"
+                                self?.placemarkSubAdministrativeArea.text = "\(placemark.administrativeArea ?? "unknown")"
+                            }
+                        })
+            }).disposed(by: disposeBag)
+    }
+    
+    private func setupUIStart() {
         mapView.showsUserLocation = true
         mapView.mapType = .standard
         self.overrideUserInterfaceStyle = .light
         weatherView.alpha = 0
         placemarkView.alpha = 0
         weatherMyLocation?.loopMode = .loop
-        weatherMyLocation?.play()
     }
     
     private func setupUI(weather: WeatherJSON?) {
-        UIView.animate(withDuration: 0.5) {
-            self.weatherView.alpha = 1
-            self.placemarkView.alpha = 1
+        mapView.showsUserLocation = true
+        mapView.mapType = .standard
+        self.overrideUserInterfaceStyle = .light
+        weatherView.alpha = 0
+        placemarkView.alpha = 0
+        weatherMyLocation?.loopMode = .loop
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            self?.weatherView.alpha = 1
+            self?.placemarkView.alpha = 1
         }
         weatherView.layer.cornerRadius = 20
         placemarkView.layer.cornerRadius = 20
@@ -61,9 +106,7 @@ class AppleMapViewController: UIViewController {
         NetworkServiceManager.shared.getWeatherCoordCityJSON(lat: lat, lon: lon) { [weak self] (result) in
             switch result {
             case .success(let weatherJSON):
-                
                 CoreDataManager.shared.addWeather(weather: weatherJSON, source: SourceValues.coordinate)
-                
                 self?.weather = weatherJSON
                 //print("weatherJSON", weatherJSON)
             case .failure(let error):
@@ -76,46 +119,31 @@ class AppleMapViewController: UIViewController {
     @IBAction func myLocationTapAction(_ sender: Any) {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
-            timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { _ in
+            DispatchQueue.global().async {
                 guard let myLocation = self.locationManager.location?.coordinate else { return }
-                self.mapView.setCenter(myLocation, animated: true)
-            })
+                self.subjectOnButton.onNext(myLocation)
+            }
         }
         locationManager.stopUpdatingLocation()
     }
 }
 
 extension AppleMapViewController: MKMapViewDelegate {
+    
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
         self.weatherMyLocation?.play()
-        UIView.animate(withDuration: 0.5) {
-            self.weatherView.alpha = 0
-            self.placemarkView.alpha = 0
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            self?.weatherView.alpha = 0
+            self?.placemarkView.alpha = 0
         }
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { _ in
-            self.weatherMyLocation?.pause()
-            self.getCoordCityData(lat: mapView.centerCoordinate.latitude, lon: mapView.centerCoordinate.longitude, onCompleted: {
-                self.weatherMyLocation?.pause()
-                        self.setupUI(weather: self.weather)
-                        let geocoder = CLGeocoder()
-                        geocoder.reverseGeocodeLocation(CLLocation(
-                                        latitude: mapView.centerCoordinate.latitude,
-                                        longitude: mapView.centerCoordinate.longitude))                     { placemarks, error in
-                        if let error = error {
-                            print(error.localizedDescription)
-                        }
-                        guard let placemark = placemarks?.first else { return }
-                        self.placemarkCountryLocalityName.text = "\(placemark.country ?? "unknown"), \(placemark.locality ?? "unknown"), \(placemark.name ?? "unknown")"
-                        self.placemarkSubAdministrativeArea.text = "\(placemark.administrativeArea ?? "unknown")"
-                    }
-                })
-        })
+        DispatchQueue.global().async {
+            self.subjectOnMap.onNext(mapView.centerCoordinate)
+        }
     }
 }
 
 extension AppleMapViewController: CLLocationManagerDelegate {
+    
     private func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
                 locationManager.startUpdatingLocation()

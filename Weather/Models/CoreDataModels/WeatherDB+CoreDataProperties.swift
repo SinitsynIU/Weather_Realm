@@ -41,6 +41,7 @@ extension WeatherDB {
     @NSManaged public var lat: Double
     @NSManaged public var lon: Double
     @NSManaged public var source: String?
+    @NSManaged public var main: String?
     
     func setValues(weather: WeatherJSON, source: SourceValues) {
         self.city = weather.name ?? ""
@@ -56,5 +57,6 @@ extension WeatherDB {
         self.humidity = Int64(weather.main.humidity ?? 0)
         self.wind = weather.wind.speed ?? 0.0
         self.source = source.rawValue
+        self.main = weather.weather.first?.main ?? ""
     }
 }

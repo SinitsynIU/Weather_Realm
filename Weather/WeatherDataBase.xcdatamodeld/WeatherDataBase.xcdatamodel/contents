@@ -8,6 +8,7 @@
         <attribute name="icon" optional="YES" attributeType="String"/>
         <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="lon" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="main" optional="YES" attributeType="String"/>
         <attribute name="pressure" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="source" optional="YES" attributeType="String"/>
         <attribute name="temp" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -16,6 +17,6 @@
         <attribute name="wind" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="WeatherDB" positionX="-11431.37890625" positionY="-6657.671875" width="128" height="238"/>
+        <element name="WeatherDB" positionX="-11431.37890625" positionY="-6657.671875" width="128" height="253"/>
     </elements>
 </model>

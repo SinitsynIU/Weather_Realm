@@ -15,12 +15,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FxI-XO-YD3">
-                                <rect key="frame" x="114.5" y="344" width="185" height="54"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgWeather" translatesAutoresizingMaskIntoConstraints="NO" id="1L9-W7-40x">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eGm-r7-cU3" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
                                 <rect key="frame" x="167" y="408" width="80" height="80"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -31,23 +28,39 @@
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="ballTrianglePath"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jk7-q5-oKC">
+                                <rect key="frame" x="78.5" y="201" width="257.5" height="76.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="76.5" id="nvB-T8-t1U"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="70"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="morphingEnabled" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="eGm-r7-cU3" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="32q-Df-mfv"/>
-                            <constraint firstItem="FxI-XO-YD3" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="Al7-F8-WRz"/>
-                            <constraint firstItem="eGm-r7-cU3" firstAttribute="top" secondItem="FxI-XO-YD3" secondAttribute="bottom" constant="10" id="kzM-2j-Sd4"/>
+                            <constraint firstItem="1L9-W7-40x" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="FLP-ct-Rgl"/>
+                            <constraint firstAttribute="bottom" secondItem="1L9-W7-40x" secondAttribute="bottom" id="RFX-nh-Rmb"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="1L9-W7-40x" secondAttribute="trailing" id="Vb5-TV-2Kz"/>
+                            <constraint firstItem="jk7-q5-oKC" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="YWq-LR-7gb"/>
+                            <constraint firstItem="1L9-W7-40x" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="hKI-5V-Qq1"/>
+                            <constraint firstItem="jk7-q5-oKC" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="157" id="viR-9N-Cc3"/>
                             <constraint firstItem="eGm-r7-cU3" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="zNn-im-XMR"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activityIndicatorView" destination="eGm-r7-cU3" id="oKv-Km-U0k"/>
-                        <outlet property="loadingLabel" destination="FxI-XO-YD3" id="JtR-bE-nhs"/>
+                        <outlet property="weatherLabel" destination="jk7-q5-oKC" id="bWN-Pu-1IA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -55,4 +68,7 @@
             <point key="canvasLocation" x="-14.492753623188406" y="63.616071428571423"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bgWeather" width="3670" height="4893"/>
+    </resources>
 </document>

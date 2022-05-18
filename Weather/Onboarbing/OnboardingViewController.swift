@@ -12,20 +12,14 @@ import AVFoundation
 class OnboardingViewController: UIViewController {
     
     @IBOutlet weak var activityIndicatorView: NVActivityIndicatorView!
-    @IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak var weatherLabel: UILabel!
     
     let group = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.overrideUserInterfaceStyle = .light
-        activityIndicatorView.startAnimating()
-        
-        MediaManager.shared.playerAudioSettings(bundleResource: MediaManager.ResourceBundleValues.loading, notificationOn: false)
-        MediaManager.shared.playerVideoSettings(bundleResource: MediaManager.ResourceBundleValues.loading, view: view, notificationOn: false)
-        MediaManager.shared.playerAudioPlay()
-        MediaManager.shared.playerVideoPlay()
-        
+        setupUI()
+        setupLocalization()
         group.enter()
         RemoteConfigureManager.shared.connectToFirebase { [weak self] in
             self?.group.leave()
@@ -37,14 +31,19 @@ class OnboardingViewController: UIViewController {
         }
     }
     
-    deinit {
-        MediaManager.shared.clearMediaPlayer()
+    private func setupUI() {
+        self.overrideUserInterfaceStyle = .light
+        activityIndicatorView.startAnimating()
+    }
+    
+    private func setupLocalization() {
+        weatherLabel.text = NSLocalizedString("tabBarItem_title_weather", comment: "")
     }
     
     private func stopAnimations() {
         activityIndicatorView.stopAnimating()
-        UIView.animate(withDuration: 0.5){
-            self.loadingLabel.alpha = 0
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            self?.weatherLabel.alpha = 0
         }
     }
     

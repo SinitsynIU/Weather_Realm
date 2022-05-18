@@ -8,7 +8,6 @@
 import UIKit
 import Lottie
 
-
 class HistoryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var contentViewCell: UIView!

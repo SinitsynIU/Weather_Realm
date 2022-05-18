@@ -7,6 +7,7 @@
 
 import UIKit
 import NVActivityIndicatorView
+import GoogleMobileAds
 
 class SearchNewsViewController: UIViewController {
     
@@ -14,6 +15,8 @@ class SearchNewsViewController: UIViewController {
         case pagingIsReady, isPaging, pagingEnd
     }
     
+    @IBOutlet weak var blurActivityIndicatorView: NVActivityIndicatorView!
+    @IBOutlet weak var blur: UIVisualEffectView!
     @IBOutlet weak var activityIndicatorView: NVActivityIndicatorView!
     @IBOutlet weak var newsTabelView: UITableView!
     
@@ -24,6 +27,7 @@ class SearchNewsViewController: UIViewController {
     private var page: Int = 1
     var timer: Timer?
     var controlGetMetod: Int?
+    var selectedIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +42,7 @@ class SearchNewsViewController: UIViewController {
     
     private func setupUI() {
         self.overrideUserInterfaceStyle = .light
+        blur.isHidden = true
     }
     
     private func setupSearchBar() {
@@ -70,6 +75,7 @@ class SearchNewsViewController: UIViewController {
                 self?.news = newsJSON
                 self?.state = newsJSON.articles?.count == 0 ? .pagingEnd : .pagingIsReady
                 self?.activityIndicatorView.stopAnimating()
+                self?.blurActivityIndicatorView.stopAnimating()
                 self?.newsTabelView.reloadData()
                 self?.controlGetMetod = nil
                 //print("News/newsJSON", newsJSON)
@@ -91,12 +97,12 @@ class SearchNewsViewController: UIViewController {
                 self?.news = newsJSON
                 self?.state = newsJSON.articles?.count == 0 ? .pagingEnd : .pagingIsReady
                 self?.activityIndicatorView.stopAnimating()
+                self?.blurActivityIndicatorView.stopAnimating()
                 self?.newsTabelView.reloadData()
                 //print("News/newsJSON", newsJSON)
             case .failure(let error):
                 self?.state = .pagingIsReady
                 self?.activityIndicatorView.stopAnimating()
-                self?.showAlert(with: "\(error.localizedDescription)")
                 self?.showAlert(with: "\(error.localizedDescription)")
             }
         })
@@ -104,6 +110,7 @@ class SearchNewsViewController: UIViewController {
 }
 
 extension SearchNewsViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return news?.articles?.count ?? 0
     }
@@ -122,6 +129,7 @@ extension SearchNewsViewController: UITableViewDataSource {
 }
 
 extension SearchNewsViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 126.0
     }
@@ -129,22 +137,34 @@ extension SearchNewsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard indexPath.section == 0 else { return }
-        if let vc = UIStoryboard(name: "PostNewsViewController", bundle: nil).instantiateInitialViewController() as? PostNewsViewController {
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .flipHorizontal
-            let newsJ = news?.articles?[indexPath.row]
-            vc.newsJ = newsJ
-            self.present(vc, animated: true, completion: nil)
+        selectedIndex = indexPath.row
+        blur.isHidden = false
+        blurActivityIndicatorView.startAnimating()
+        AdsManager.shared.setupRewarded(viewController: self) { [weak self] in
+            self?.blurActivityIndicatorView.stopAnimating()
+        } onError: { [weak self] in
+            print("Failed to load rewarded ad with error")
+            if let vc = UIStoryboard(name: "PostNewsViewController", bundle: nil).instantiateInitialViewController() as? PostNewsViewController, let index = self?.selectedIndex {
+                vc.modalPresentationStyle = .fullScreen
+                vc.modalTransitionStyle = .flipHorizontal
+                let newsJ = self?.news?.articles?[index]
+                vc.newsJ = newsJ
+                self?.present(vc, animated: true, completion: nil)
+            }
+            self?.selectedIndex = nil
+            self?.blur.isHidden = true
         }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if controlGetMetod == 1 {
+        if controlGetMetod == 1 { 
             if indexPath.row == (news?.articles?.count ?? 0) - 1 {
+                activityIndicatorView.startAnimating()
                 self.getNewsData(page: self.page, search: "")
             }
         } else {
             if indexPath.row == (news?.articles?.count ?? 0) - 1 {
+                activityIndicatorView.startAnimating()
                 self.getNewsCountryData(page: self.page)
             }
         }
@@ -152,18 +172,47 @@ extension SearchNewsViewController: UITableViewDelegate {
 }
 
 extension SearchNewsViewController: UISearchBarDelegate {
+
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         newsTabelView.reloadData()
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-            self.activityIndicatorView.startAnimating()
+            self.blurActivityIndicatorView.startAnimating()
             self.getNewsData(page: 0, search: searchText)
         })
     }
-    
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.activityIndicatorView.startAnimating()
+        self.blurActivityIndicatorView.startAnimating()
         self.getNewsCountryData(page: 0)
-       
+    }
+}
+
+extension SearchNewsViewController: GADFullScreenContentDelegate {
+    
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        if let vc = UIStoryboard(name: "PostNewsViewController", bundle: nil).instantiateInitialViewController() as? PostNewsViewController, let index = selectedIndex {
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .flipHorizontal
+            let newsJ = news?.articles?[index]
+            vc.newsJ = newsJ
+            self.present(vc, animated: true, completion: {
+                self.blur.isHidden = true
+            })
+        }
+        selectedIndex = nil
+    }
+    
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        if let vc = UIStoryboard(name: "PostNewsViewController", bundle: nil).instantiateInitialViewController() as? PostNewsViewController, let index = selectedIndex {
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .flipHorizontal
+            let newsJ = news?.articles?[index]
+            vc.newsJ = newsJ
+            self.present(vc, animated: true, completion: {
+                self.blur.isHidden = true
+            })
+        }
+        selectedIndex = nil
     }
 }

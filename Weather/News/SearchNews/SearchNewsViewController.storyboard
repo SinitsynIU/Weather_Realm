@@ -34,24 +34,60 @@
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="ballTrianglePath"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <visualEffectView opaque="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="ABN-LS-5V0">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="uIO-Il-qOl">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tor-EJ-fpk" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
+                                            <rect key="frame" x="172" y="413" width="70" height="70"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="70" id="dGy-pd-p8p"/>
+                                                <constraint firstAttribute="width" constant="70" id="tXz-Rn-q1L"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="ballTrianglePath"/>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="tor-EJ-fpk" firstAttribute="centerY" secondItem="uIO-Il-qOl" secondAttribute="centerY" id="BwX-h1-rqF"/>
+                                        <constraint firstItem="tor-EJ-fpk" firstAttribute="centerX" secondItem="uIO-Il-qOl" secondAttribute="centerX" id="U8B-js-neU"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="dhe-qg-KCs" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="07d-JI-dgS"/>
+                            <constraint firstItem="ABN-LS-5V0" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="242-Jn-qWd"/>
+                            <constraint firstItem="ABN-LS-5V0" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="FZ5-iP-0Zg"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="peg-5j-mpD" secondAttribute="trailing" id="MPS-h5-LZy"/>
+                            <constraint firstItem="dhe-qg-KCs" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="QUo-zM-Pkb"/>
+                            <constraint firstItem="ABN-LS-5V0" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="T2y-sr-wTw"/>
+                            <constraint firstItem="ABN-LS-5V0" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="TAr-nM-tui"/>
                             <constraint firstItem="0Uz-so-Frf" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="U5f-5m-vlN"/>
+                            <constraint firstAttribute="bottom" secondItem="ABN-LS-5V0" secondAttribute="bottom" id="Vjo-f5-54R"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="peg-5j-mpD" secondAttribute="bottom" id="W3C-j8-Cr9"/>
-                            <constraint firstItem="dhe-qg-KCs" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="aEZ-jO-nFl"/>
+                            <constraint firstItem="ABN-LS-5V0" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="a2c-tD-qiJ"/>
+                            <constraint firstItem="ABN-LS-5V0" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="aHo-Ky-T6x"/>
                             <constraint firstItem="0Uz-so-Frf" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="iys-p3-1Jd"/>
                             <constraint firstItem="0Uz-so-Frf" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="mN0-eR-AgY"/>
                             <constraint firstItem="peg-5j-mpD" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="tBN-Bj-aAb"/>
+                            <constraint firstItem="dhe-qg-KCs" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="v19-Vd-Vst"/>
                             <constraint firstItem="peg-5j-mpD" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="vnc-rk-Scz"/>
                             <constraint firstAttribute="bottom" secondItem="0Uz-so-Frf" secondAttribute="bottom" id="w1G-jr-56f"/>
+                            <constraint firstAttribute="bottom" secondItem="ABN-LS-5V0" secondAttribute="bottom" id="xEc-nb-18i"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="News" id="xFb-k6-a2s">
@@ -61,6 +97,8 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activityIndicatorView" destination="dhe-qg-KCs" id="F2Y-sd-E2i"/>
+                        <outlet property="blur" destination="ABN-LS-5V0" id="De6-Jn-HfD"/>
+                        <outlet property="blurActivityIndicatorView" destination="tor-EJ-fpk" id="eeZ-gV-ZA1"/>
                         <outlet property="newsTabelView" destination="peg-5j-mpD" id="PXJ-oG-pe4"/>
                     </connections>
                 </viewController>

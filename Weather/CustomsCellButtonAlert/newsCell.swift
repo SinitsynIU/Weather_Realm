@@ -20,6 +20,7 @@ class newsCell: UITableViewCell {
         cell.layer.cornerRadius = 25
         authorImageView.layer.cornerRadius = 15
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         authorImageView.image = nil
