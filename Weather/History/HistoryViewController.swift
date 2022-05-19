@@ -18,9 +18,11 @@ class HistoryViewController: UIViewController {
     @IBOutlet weak var historyBgImage: UIImageView!
     @IBOutlet weak var historyLabel: UILabel!
     
-    //var weatherSubject = BehaviorSubject<WeatherDB>(value: WeatherDB())
+   // var weatherSubject = BehaviorSubject<WeatherDB>(value: WeatherDB())
     var fetchResultController: NSFetchedResultsController<WeatherDB>!
     //let disposeBag = DisposeBag()
+    
+    //let weatherArray: [WeatherDB] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +30,7 @@ class HistoryViewController: UIViewController {
         setupLocalization()
         
         NotificationCenter.default.addObserver(self, selector: #selector(weatherDataBaseDidChange), name: NSNotification.Name("WeatherDataBaseDidChange"), object: nil)
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {

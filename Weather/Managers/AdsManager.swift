@@ -21,7 +21,7 @@ class AdsManager: NSObject {
         bannerView.load(GADRequest())
     }
     
-    func setupInterstitial(viewController: UIViewController, onError: @escaping(() -> ())) {
+    func setupInterstitial(onError: @escaping(() -> ())) {
         timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false, block: { _ in
             let request = GADRequest()
                 // my interstitial ID = ca-app-pub-2048459780354579/5361351703
@@ -34,7 +34,9 @@ class AdsManager: NSObject {
                                   return
                                 }
                                 interstitial = ad
-                                interstitial?.fullScreenContentDelegate = viewController as? GADFullScreenContentDelegate
+                                interstitial?.fullScreenContentDelegate = self
+                                guard let controller = UIApplication.shared.topViewController() else { return }
+                                interstitial?.present(fromRootViewController: controller)
                               })
         })
     }
@@ -58,5 +60,40 @@ class AdsManager: NSObject {
             print("Rewarded ad loaded.")
             rewardedAd?.fullScreenContentDelegate = viewController as? GADFullScreenContentDelegate
            })
+    }
+}
+
+extension AdsManager: GADFullScreenContentDelegate {
+    
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        timer?.invalidate()
+        setupInterstitial {
+            print("Failed to load rewarded ad with error")
+        }
+    }
+    
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        timer?.invalidate()
+        setupInterstitial {
+            print("Failed to load rewarded ad with error")
+        }
+    }
+}
+
+extension UIApplication {
+    
+    func topViewController (controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let navigationController = controller as? UINavigationController {
+            return topViewController(controller: navigationController.visibleViewController)
+        }
+        if let tabController = controller as? UITabBarController {
+            if let selected = tabController.selectedViewController {
+                return topViewController(controller: selected)
+            }
+        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
     }
 }
