@@ -18,25 +18,22 @@ class HistoryViewController: UIViewController {
     @IBOutlet weak var historyBgImage: UIImageView!
     @IBOutlet weak var historyLabel: UILabel!
     
-   // var weatherSubject = BehaviorSubject<WeatherDB>(value: WeatherDB())
-    var fetchResultController: NSFetchedResultsController<WeatherDB>!
-    //let disposeBag = DisposeBag()
-    
-    //let weatherArray: [WeatherDB] = []
+    var weatherArray = BehaviorSubject<[(weather:WeatherJSON, date:Date)]>(value: [])
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupLocalization()
-        
+        getWeatherOfDB()
         NotificationCenter.default.addObserver(self, selector: #selector(weatherDataBaseDidChange), name: NSNotification.Name("WeatherDataBaseDidChange"), object: nil)
-       
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupTabelView()
-        fetchRequest()
         historyTabelView.reloadData()
     }
     
@@ -47,8 +44,31 @@ class HistoryViewController: UIViewController {
     
     @objc
     func weatherDataBaseDidChange() {
-        fetchRequest()
+        getWeatherOfDB()
         historyTabelView.reloadData()
+    }
+    
+    func buttonIsHidden() {
+//        if weatherArray.rx. == 0 {
+//            clearBDButton.isHidden = true
+//        } else {
+//            clearBDButton.isHidden = false
+//        }
+    }
+    
+    private func getWeatherOfDB() {
+        if historySegmentedControl.selectedSegmentIndex == 0 {
+            let parameters = CoreDataManager.shared.getWeatherSourceFromDB(source: SourceValues.city.rawValue)
+            
+            //weatherArray.removeAll()
+            weatherArray.onNext(parameters)
+            print(weatherArray)
+        } else {
+            let parameters = CoreDataManager.shared.getWeatherSourceFromDB(source: SourceValues.coordinate.rawValue)
+            //weatherArray.removeAll()
+            weatherArray.onNext(parameters)
+            print(weatherArray)
+        }
     }
     
     private func setupUI() {
@@ -57,36 +77,40 @@ class HistoryViewController: UIViewController {
     }
     
     private func setupTabelView() {
-        historyTabelView.delegate = self
-        historyTabelView.dataSource = self
+        historyTabelView.delegate = nil
+        historyTabelView.dataSource = nil
         historyTabelView.register(UINib(nibName: "HistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "HistoryTableViewCell")
         
-//        weatherSubject
-//            .bind(to: historyTabelView.rx.items(cellIdentifier: "HistoryTableViewCell", cellType: HistoryTableViewCell.self)) { index, model, cell in
+        weatherArray
+            .bind(to: historyTabelView.rx.items(cellIdentifier: "HistoryTableViewCell", cellType: HistoryTableViewCell.self)) { index, model, cell in
                 
-           // let weatherDB = fetchResultController.object(at: model)
-//            cell.date = weatherDB.date
-//            cell.selectionStyle = .none
-//            cell.tempLabel.text = "\(Int(weatherDB.temp))°С"
-//            cell.containerActions.isHidden = true
-//            cell.deleteView?.play()
-//            if self.historySegmentedControl.selectedSegmentIndex == 0 {
-//                cell.coordinateLabel.text = nil
-//                cell.cityLabel.text = weatherDB.city
-//            } else {
-//                cell.coordinateLabel.text = "lat: \(weatherDB.lat), lon: \(weatherDB.lon)"
-//                cell.cityLabel.text = nil
-//            }
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
-//            let date: String =  dateFormatter.string(from: weatherDB.date ?? Date.now)
-//            cell.dateTimeLabel.text = "\(date)"
-//            let icon: String = weatherDB.icon ?? ""
-//                FileServiceManager.shared.getWeatherImage(icon: icon, completed: { image in
-//                    cell.historyTempImageView.image = image
-//                })
+                cell.date = model.date
+                cell.selectionStyle = .none
+                cell.tempLabel.text = "\(Int(model.weather.main.temp ?? 0.0))°С"
+                cell.containerActions.isHidden = true
+                cell.deleteView?.play()
+                if self.historySegmentedControl.selectedSegmentIndex == 0 {
+                    cell.coordinateLabel.text = nil
+                    cell.cityLabel.text = model.weather.name
+                } else {
+                    cell.coordinateLabel.text = "lat: \(model.weather.coord.lat ?? 0.0), lon: \(model.weather.coord.lon ?? 0.0)"
+                    cell.cityLabel.text = nil
+                }
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
+                let date: String =  dateFormatter.string(from: model.date)
+                cell.dateTimeLabel.text = "\(date)"
+                let icon: String = model.weather.weather.first?.icon ?? ""
+                    FileServiceManager.shared.getWeatherImage(icon: icon, completed: { image in
+                        cell.historyTempImageView.image = image
+                    })
                 
-       // }.disposed(by: disposeBag)
+        }.disposed(by: disposeBag)
+        
+        historyTabelView
+                .rx
+                .setDelegate(self)
+                .disposed(by: disposeBag)
     }
     
     private func setupLocalization() {
@@ -96,23 +120,10 @@ class HistoryViewController: UIViewController {
         clearBDButton.text = NSLocalizedString("clearBDButton_text_history", comment: "")
     }
     
-    private func fetchRequest() {
-        let fetchRequest: NSFetchRequest<WeatherDB>
-        if historySegmentedControl.selectedSegmentIndex == 0 {
-            fetchRequest = WeatherDB.fetchRequest(source: SourceValues.city.rawValue)
-        } else {
-            fetchRequest = WeatherDB.fetchRequest(source: SourceValues.coordinate.rawValue)
-        }
-        let sort = NSSortDescriptor(key: "date", ascending: false)
-        fetchRequest.sortDescriptors = [sort]
-        fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataManager.shared.context, sectionNameKeyPath: nil, cacheName: nil)
-        try! fetchResultController.performFetch()
-    }
-    
     @IBAction func historySegmentedControlAction(_ sender: Any) {
         MediaManager.shared.playerAudioSettings(bundleResource: MediaManager.ResourceBundleValues.tap, notificationOn: false)
         MediaManager.shared.playerAudioPlay()
-        fetchRequest()
+        getWeatherOfDB()
         historyTabelView.reloadData()
     }
     
@@ -120,7 +131,10 @@ class HistoryViewController: UIViewController {
         MediaManager.shared.playerAudioSettings(bundleResource: MediaManager.ResourceBundleValues.remove, notificationOn: false)
         MediaManager.shared.playerAudioPlay()
         CoreDataManager.shared.deleteWeatherAll()
-        fetchRequest()
+        
+    
+        
+        
         historyTabelView.reloadData()
     }
 }
@@ -143,43 +157,5 @@ extension HistoryViewController: UITableViewDelegate {
 //            vc.weatherJ = weatherDB
 //            self.present(vc, animated: true, completion: nil)
 //        }
-    }
-}
-
-extension HistoryViewController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if fetchResultController.sections?[section].numberOfObjects == 0 {
-            clearBDButton.isHidden = true
-        } else {
-            clearBDButton.isHidden = false
-        }
-        return fetchResultController.sections?[section].numberOfObjects ?? 0
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryTableViewCell") as? HistoryTableViewCell else { return UITableViewCell() }
-        let weatherDB = fetchResultController.object(at: indexPath)
-        cell.date = weatherDB.date
-        cell.selectionStyle = .none
-        cell.tempLabel.text = "\(Int(weatherDB.temp))°С"
-        cell.containerActions.isHidden = true
-        cell.deleteView?.play()
-        if historySegmentedControl.selectedSegmentIndex == 0 {
-            cell.coordinateLabel.text = nil
-            cell.cityLabel.text = weatherDB.city
-        } else {
-            cell.coordinateLabel.text = "lat: \(weatherDB.lat), lon: \(weatherDB.lon)"
-            cell.cityLabel.text = nil
-        }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
-        let date: String =  dateFormatter.string(from: weatherDB.date ?? Date.now)
-        cell.dateTimeLabel.text = "\(date)"
-        let icon: String = weatherDB.icon ?? ""
-            FileServiceManager.shared.getWeatherImage(icon: icon, completed: { image in
-                cell.historyTempImageView.image = image
-            })
-        return cell
     }
 }

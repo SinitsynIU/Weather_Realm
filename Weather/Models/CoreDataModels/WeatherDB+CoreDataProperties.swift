@@ -43,6 +43,24 @@ extension WeatherDB {
     @NSManaged public var source: String?
     @NSManaged public var main: String?
     
+    func getMappedWeather() -> (WeatherJSON, Date) {
+        return (WeatherJSON(coord: Coord(lon: lon,
+                                        lat: lat),
+                           weather: [Weather(main: main ?? "",
+                                             icon: icon ?? "",
+                                             weatherDescription: "")],
+                           main: Main(temp: temp,
+                                        tempMin: tempMin,
+                                        tempMax: tempMax,
+                                        pressure: Int(pressure),
+                                        humidity: Int(humidity)),
+                           wind: Wind(speed: wind),
+                           sys: Sys(country: country ?? ""),
+                           name: city ?? "",
+                           cod: 0),
+                           date ?? Date())
+    }
+    
     func setValues(weather: WeatherJSON, source: SourceValues) {
         self.city = weather.name ?? ""
         self.country = weather.sys.country ?? ""

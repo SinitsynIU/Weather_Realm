@@ -30,16 +30,27 @@ class CoreDataManager {
     }
     
     func addWeather(weather: WeatherJSON, source: SourceValues) {
-        let weatherDB = WeatherDB(context: context)
+        let weatherDB =  WeatherDB(context: context)
         weatherDB.setValues(weather: weather, source: source)
         self.context.insert(weatherDB)
         saveContext()
     }
     
-    func getWeatherSourceFromDB(source: SourceValues.RawValue) -> WeatherDB? {
+    func getWeatherSourceFromDB(source: SourceValues.RawValue) -> [(WeatherJSON, Date)] {
+        // -> WeatherDB? {
        let request = WeatherDB.fetchRequest(source: source)
-        return try? self.context.fetch(request).first
+        //return try? self.context.fetch(request).first
+        let sort = NSSortDescriptor(key: "date", ascending: false)
+        request.sortDescriptors = [sort]
+        guard let paremeters = try? context.fetch(request) else { return [] }
+        return paremeters.map { $0.getMappedWeather() }
     }
+    
+//    func getAllWeatherFromDB() -> [WeatherJSON] {
+//       let request = WeatherDB.fetchRequest()
+//        guard let paremeters = try? context.fetch(request) else { return [] }
+//        return paremeters.map { $0.getMappedWeather() }
+//    }
     
     func saveContext () {
         let context = context

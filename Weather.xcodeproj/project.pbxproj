@@ -38,6 +38,7 @@
 		4838C36A27ECB4F2003778BA /* newsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4838C36827ECB4F2003778BA /* newsCell.swift */; };
 		4838C36F27ED8E85003778BA /* PostNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4838C36E27ED8E85003778BA /* PostNewsViewController.swift */; };
 		4838C37127ED8E96003778BA /* PostNewsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4838C37027ED8E96003778BA /* PostNewsViewController.storyboard */; };
+		4853C0CF283B55C000283958 /* keyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4853C0CE283B55C000283958 /* keyWindow.swift */; };
 		485A636E27FEAE180013E62E /* GoogleMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485A636D27FEAE180013E62E /* GoogleMapViewController.swift */; };
 		485A637127FEAE390013E62E /* GoogleMapViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 485A637027FEAE390013E62E /* GoogleMapViewController.storyboard */; };
 		485A637527FF2A8F0013E62E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 485A637427FF2A8F0013E62E /* GoogleService-Info.plist */; };
@@ -108,6 +109,7 @@
 		4838C36827ECB4F2003778BA /* newsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newsCell.swift; sourceTree = "<group>"; };
 		4838C36E27ED8E85003778BA /* PostNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNewsViewController.swift; sourceTree = "<group>"; };
 		4838C37027ED8E96003778BA /* PostNewsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PostNewsViewController.storyboard; sourceTree = "<group>"; };
+		4853C0CE283B55C000283958 /* keyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = keyWindow.swift; sourceTree = "<group>"; };
 		485A636D27FEAE180013E62E /* GoogleMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapViewController.swift; sourceTree = "<group>"; };
 		485A637027FEAE390013E62E /* GoogleMapViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GoogleMapViewController.storyboard; sourceTree = "<group>"; };
 		485A637427FF2A8F0013E62E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				485A63942805363C0013E62E /* UIViewController + CoreKit.swift */,
 				48FEBD6027E8AFA0008D0259 /* ShowAlert+HideKeyboard.swift */,
 				485A63962807E64A0013E62E /* RCManagerDefaultValue.swift */,
+				4853C0CE283B55C000283958 /* keyWindow.swift */,
 			);
 			path = Extantions;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				485A63EF2808303B0013E62E /* WeatherDB+CoreDataProperties.swift in Sources */,
 				489BC14227E8FA9900384FB3 /* WeatherJSON.swift in Sources */,
 				485A63952805363C0013E62E /* UIViewController + CoreKit.swift in Sources */,
+				4853C0CF283B55C000283958 /* keyWindow.swift in Sources */,
 				4838C35227EC400B003778BA /* AppleMapViewController.swift in Sources */,
 				4838C34E27EB8840003778BA /* FileServiceManager.swift in Sources */,
 				485A63C8280816670013E62E /* WeatherDataBase.xcdatamodeld in Sources */,
