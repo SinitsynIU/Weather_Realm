@@ -24,11 +24,9 @@ class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        buttonIsHidden()
         setupLocalization()
-        getWeatherOfDB()
         NotificationCenter.default.addObserver(self, selector: #selector(weatherDataBaseDidChange), name: NSNotification.Name("WeatherDataBaseDidChange"), object: nil)
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,36 +42,31 @@ class HistoryViewController: UIViewController {
     
     @objc
     func weatherDataBaseDidChange() {
-        getWeatherOfDB()
+        // weatherArray.removeAll()
         historyTabelView.reloadData()
     }
     
     func buttonIsHidden() {
-//        if weatherArray.rx. == 0 {
+//        weatherArray
+//            .filter { value in
+//            value.count > 1
+//            }
+//            .subscribe(onNext: { [weak self] value in
+//            self?.clearBDButton.isHidden = false
+//            })
+//            .disposed(by: disposeBag)
+//        if weatherArray.count {
 //            clearBDButton.isHidden = true
 //        } else {
 //            clearBDButton.isHidden = false
 //        }
     }
-    
-    private func getWeatherOfDB() {
-        if historySegmentedControl.selectedSegmentIndex == 0 {
-            let parameters = CoreDataManager.shared.getWeatherSourceFromDB(source: SourceValues.city.rawValue)
-            
-            //weatherArray.removeAll()
-            weatherArray.onNext(parameters)
-            print(weatherArray)
-        } else {
-            let parameters = CoreDataManager.shared.getWeatherSourceFromDB(source: SourceValues.coordinate.rawValue)
-            //weatherArray.removeAll()
-            weatherArray.onNext(parameters)
-            print(weatherArray)
-        }
-    }
+   
     
     private func setupUI() {
         self.overrideUserInterfaceStyle = .light
         historyBgImage.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        clearBDButton.isHidden = true
     }
     
     private func setupTabelView() {
@@ -120,10 +113,26 @@ class HistoryViewController: UIViewController {
         clearBDButton.text = NSLocalizedString("clearBDButton_text_history", comment: "")
     }
     
-    @IBAction func historySegmentedControlAction(_ sender: Any) {
+    @IBAction func historySegmentedControlAction(_ sender: UISegmentedControl) {
         MediaManager.shared.playerAudioSettings(bundleResource: MediaManager.ResourceBundleValues.tap, notificationOn: false)
         MediaManager.shared.playerAudioPlay()
-        getWeatherOfDB()
+        
+        if sender.selectedSegmentIndex == 0 {
+            let parameters = CoreDataManager.shared.getWeatherSourceFromDB(source: SourceValues.city.rawValue)
+            weatherArray.subscribe(onNext: { value in
+                print(value)
+            }).disposed(by: disposeBag)
+            //weatherArray.removeAll()
+            weatherArray.onNext(parameters)
+        } else {
+            let parameters = CoreDataManager.shared.getWeatherSourceFromDB(source: SourceValues.coordinate.rawValue)
+            weatherArray.subscribe(onNext: { value in
+                print(value)
+            }).disposed(by: disposeBag)
+            //weatherArray.removeAll()
+            weatherArray.onNext(parameters)
+        }
+        
         historyTabelView.reloadData()
     }
     
@@ -131,9 +140,6 @@ class HistoryViewController: UIViewController {
         MediaManager.shared.playerAudioSettings(bundleResource: MediaManager.ResourceBundleValues.remove, notificationOn: false)
         MediaManager.shared.playerAudioPlay()
         CoreDataManager.shared.deleteWeatherAll()
-        
-    
-        
         
         historyTabelView.reloadData()
     }
