@@ -61,7 +61,6 @@ class HistoryViewController: UIViewController {
 //            clearBDButton.isHidden = false
 //        }
     }
-   
     
     private func setupUI() {
         self.overrideUserInterfaceStyle = .light
@@ -73,10 +72,8 @@ class HistoryViewController: UIViewController {
         historyTabelView.delegate = nil
         historyTabelView.dataSource = nil
         historyTabelView.register(UINib(nibName: "HistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "HistoryTableViewCell")
-        
         weatherArray
             .bind(to: historyTabelView.rx.items(cellIdentifier: "HistoryTableViewCell", cellType: HistoryTableViewCell.self)) { index, model, cell in
-                
                 cell.date = model.date
                 cell.selectionStyle = .none
                 cell.tempLabel.text = "\(Int(model.weather.main.temp ?? 0.0))°С"
@@ -97,9 +94,7 @@ class HistoryViewController: UIViewController {
                     FileServiceManager.shared.getWeatherImage(icon: icon, completed: { image in
                         cell.historyTempImageView.image = image
                     })
-                
-        }.disposed(by: disposeBag)
-        
+            }.disposed(by: disposeBag)
         historyTabelView
                 .rx
                 .setDelegate(self)

@@ -18,6 +18,7 @@ target 'Weather' do
   pod 'Google-Mobile-Ads-SDK'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'RealmSwift'
   
   post_install do |installer|
     installer.pods_project.build_configurations.each do |config|
