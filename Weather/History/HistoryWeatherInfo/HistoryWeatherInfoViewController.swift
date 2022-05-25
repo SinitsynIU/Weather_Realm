@@ -20,7 +20,7 @@ class HistoryWeatherInfoViewController: UIViewController {
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var minMaxTempLabel: UILabel!
     
-    var weatherJ: WeatherDB?
+    var weatherJ: RealmBD?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +35,7 @@ class HistoryWeatherInfoViewController: UIViewController {
         MediaManager.shared.notificationRemove()
     }
     
-    private func setupPlayerVideoBackground(weather: WeatherDB?, view: UIView) {
+    private func setupPlayerVideoBackground(weather: RealmBD?, view: UIView) {
         if weather?.main == "Clouds" {
             MediaManager.shared.playerVideoSettings(bundleResource: MediaManager.ResourceBundleValues.clouds, view: view, notificationOn: true)
             MediaManager.shared.playerAudioSettings(bundleResource: .clouds, notificationOn: true)

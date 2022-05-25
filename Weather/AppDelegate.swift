@@ -10,7 +10,6 @@ import AlamofireNetworkActivityLogger
 import IQKeyboardManagerSwift
 import GoogleMaps
 import FirebaseCore
-import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,9 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkActivityLogger.shared.startLogging()
         NetworkActivityLogger.shared.level = .debug
         IQKeyboardManager.shared.enable = true
-        
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
-        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ GADSimulatorID ]
         
         FirebaseApp.configure()
         GMSServices.provideAPIKey("AIzaSyClrmf07LZH3Z8GKwsXY--YrgfIGwA3dU8")

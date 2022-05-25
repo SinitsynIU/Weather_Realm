@@ -6,9 +6,9 @@
 //
 
 import UIKit
-import CoreData
 import RxCocoa
 import RxSwift
+import RealmSwift
 
 class HistoryViewController: UIViewController {
     
@@ -21,12 +21,20 @@ class HistoryViewController: UIViewController {
     var weatherArray = BehaviorSubject<[(weather:WeatherJSON, date:Date)]>(value: [])
     let disposeBag = DisposeBag()
     
+    private var observerWeatherToken: NotificationToken?
+    
+    deinit {
+        observerWeatherToken?.invalidate()
+        observerWeatherToken = nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        getData ()
         buttonIsHidden()
         setupLocalization()
-        NotificationCenter.default.addObserver(self, selector: #selector(weatherDataBaseDidChange), name: NSNotification.Name("WeatherDataBaseDidChange"), object: nil)
+        observerWeather()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,32 +48,55 @@ class HistoryViewController: UIViewController {
         MediaManager.shared.clearMediaPlayer()
     }
     
-    @objc
-    func weatherDataBaseDidChange() {
-        // weatherArray.removeAll()
+    private func observerWeather() {
+        
+        guard let date = try? weatherArray.value().first?.date else { return }
+        observerWeatherToken = RealmManager.shared.getObserverWeather(date: date).observe({ collection in
+            switch collection {
+            case .initial(let collection):
+                print(collection.count)
+                self.historyTabelView.reloadData()
+            case .update(let collection, deletions: let del, insertions: let ins, modifications: let mod):
+                print(collection.count)
+                print(del)
+                print(ins)
+                print(mod)
+                self.getData()
+                self.historyTabelView.reloadData()
+            default: break
+            }
+        })
+    }
+    
+    private func getData () {
+        if historySegmentedControl.selectedSegmentIndex == 0 {
+            let parameters = RealmManager.shared.getWeather(source: SourceValues.city.rawValue)
+            weatherArray.subscribe(onNext: { value in
+            }).disposed(by: disposeBag)
+            weatherArray.onNext(parameters)
+        } else {
+            let parameters = RealmManager.shared.getWeather(source: SourceValues.coordinate.rawValue)
+            weatherArray.subscribe(onNext: { value in
+                print(value)
+            }).disposed(by: disposeBag)
+            weatherArray.onNext(parameters)
+        }
         historyTabelView.reloadData()
     }
     
-    func buttonIsHidden() {
-//        weatherArray
-//            .filter { value in
-//            value.count > 1
-//            }
-//            .subscribe(onNext: { [weak self] value in
-//            self?.clearBDButton.isHidden = false
-//            })
-//            .disposed(by: disposeBag)
-//        if weatherArray.count {
-//            clearBDButton.isHidden = true
+    private func buttonIsHidden() {
+//
+//        if weatherArray.value().count > 0 {
+//            self.clearBDButton.isHidden = false
 //        } else {
-//            clearBDButton.isHidden = false
+//            self.clearBDButton.isHidden = true
 //        }
     }
     
     private func setupUI() {
         self.overrideUserInterfaceStyle = .light
         historyBgImage.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        clearBDButton.isHidden = true
+        //clearBDButton.isHidden = true
     }
     
     private func setupTabelView() {
@@ -111,32 +142,13 @@ class HistoryViewController: UIViewController {
     @IBAction func historySegmentedControlAction(_ sender: UISegmentedControl) {
         MediaManager.shared.playerAudioSettings(bundleResource: MediaManager.ResourceBundleValues.tap, notificationOn: false)
         MediaManager.shared.playerAudioPlay()
-        
-        if sender.selectedSegmentIndex == 0 {
-            let parameters = CoreDataManager.shared.getWeatherSourceFromDB(source: SourceValues.city.rawValue)
-            weatherArray.subscribe(onNext: { value in
-                print(value)
-            }).disposed(by: disposeBag)
-            //weatherArray.removeAll()
-            weatherArray.onNext(parameters)
-        } else {
-            let parameters = CoreDataManager.shared.getWeatherSourceFromDB(source: SourceValues.coordinate.rawValue)
-            weatherArray.subscribe(onNext: { value in
-                print(value)
-            }).disposed(by: disposeBag)
-            //weatherArray.removeAll()
-            weatherArray.onNext(parameters)
-        }
-        
-        historyTabelView.reloadData()
+        getData()
     }
     
     @IBAction func ClearBDAction(_ sender: Any) {
         MediaManager.shared.playerAudioSettings(bundleResource: MediaManager.ResourceBundleValues.remove, notificationOn: false)
         MediaManager.shared.playerAudioPlay()
-        CoreDataManager.shared.deleteWeatherAll()
-        
-        historyTabelView.reloadData()
+        RealmManager.shared.removeWeatherAll()
     }
 }
 

@@ -109,19 +109,11 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="location"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sqo-5k-BCE" customClass="GADBannerView">
-                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="DkQ-9v-7Tr"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="dRW-Fi-Yp7" firstAttribute="top" secondItem="lKr-23-rYg" secondAttribute="bottom" constant="3" id="0bC-Xb-dyi"/>
-                            <constraint firstItem="Sqo-5k-BCE" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="56c-Zb-3cD"/>
                             <constraint firstItem="iH4-sv-Nqe" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="8oU-i7-QcD"/>
                             <constraint firstItem="fS9-D8-4hA" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="ABS-b9-kP3"/>
                             <constraint firstItem="E4M-0h-QRo" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="BPw-Mb-aZp"/>
@@ -132,19 +124,16 @@
                             <constraint firstItem="dRW-Fi-Yp7" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="8" id="Lvy-LT-3fh"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="dRW-Fi-Yp7" secondAttribute="trailing" constant="8" id="MKD-bt-IrS"/>
                             <constraint firstItem="fns-sX-OKS" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="XwF-ZU-R52"/>
-                            <constraint firstItem="Sqo-5k-BCE" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="YMh-it-Reu"/>
                             <constraint firstItem="fns-sX-OKS" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Ylh-XL-FbS"/>
                             <constraint firstAttribute="bottom" secondItem="fns-sX-OKS" secondAttribute="bottom" id="Z2Q-Pd-MIa"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="iH4-sv-Nqe" secondAttribute="bottom" constant="10" id="ZCj-xk-2e2"/>
-                            <constraint firstItem="Sqo-5k-BCE" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="a4E-C0-tO9"/>
                             <constraint firstItem="fns-sX-OKS" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" constant="83" id="jsp-Zo-WV1"/>
-                            <constraint firstItem="lKr-23-rYg" firstAttribute="top" secondItem="Sqo-5k-BCE" secondAttribute="bottom" constant="3" id="pGX-yy-DBG"/>
+                            <constraint firstItem="lKr-23-rYg" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="53" id="wSp-rf-wX4"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map.circle.fill" catalog="system" id="bwY-rg-YFN"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="bannerView" destination="Sqo-5k-BCE" id="Rdk-fW-YrD"/>
                         <outlet property="mapView" destination="fns-sX-OKS" id="xN5-xU-1ra"/>
                         <outlet property="placemarkCountryLocalityName" destination="wDR-Fu-0F0" id="jje-Of-Qu4"/>
                         <outlet property="placemarkSubAdministrativeArea" destination="99H-Lb-Qzq" id="dbk-U7-aPI"/>

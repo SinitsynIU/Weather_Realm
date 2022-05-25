@@ -10,7 +10,7 @@ import UIKit
 class FileServiceManager {
     static let shared = FileServiceManager()
     
-    private let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
        
     fileprivate func directoryExistsAtPath(_ path: String) -> Bool {
         var isDirectory = ObjCBool(true)

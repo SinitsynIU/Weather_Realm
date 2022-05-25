@@ -7,6 +7,7 @@
 
 import UIKit
 import Lottie
+import SwiftUI
 
 class HistoryTableViewCell: UITableViewCell {
     
@@ -20,7 +21,7 @@ class HistoryTableViewCell: UITableViewCell {
     @IBOutlet weak var dateTimeLabel: UILabel!
     @IBOutlet weak var historyTempImageView: UIImageView!
     
-    var date: Date?
+    var date: Date? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -66,9 +67,9 @@ class HistoryTableViewCell: UITableViewCell {
     }
     
     @IBAction func deleteButtonAction(_ sender: Any) {
-        CoreDataManager.shared.deleteWeather(date: date ?? Date.now)
         MediaManager.shared.playerAudioSettings(bundleResource: MediaManager.ResourceBundleValues.remove, notificationOn: false)
         MediaManager.shared.playerAudioPlay()
+        RealmManager.shared.removeWeatherFromDate(date: date ?? Date.now)
     }
     
     override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {

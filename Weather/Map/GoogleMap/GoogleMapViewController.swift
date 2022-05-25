@@ -8,7 +8,6 @@
 import UIKit
 import GoogleMaps
 import CoreLocation
-import GoogleMobileAds
 import RxCocoa
 import RxSwift
 
@@ -16,7 +15,6 @@ class GoogleMapViewController: UIViewController {
     
     @IBOutlet weak var placemarkView: UIView!
     @IBOutlet weak var weatherView: UIView!
-    @IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet weak var weatherTemp: UILabel!
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var placemarkCountryLocalityName: UILabel!
@@ -36,8 +34,6 @@ class GoogleMapViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         mapView.delegate = self
-        
-        AdsManager.shared.setupBunner(bannerView: bannerView, viewController: self)
         
         subjectOnMap
             .debounce(DispatchTimeInterval.seconds(2), scheduler: MainScheduler.instance)
@@ -100,7 +96,7 @@ class GoogleMapViewController: UIViewController {
         NetworkServiceManager.shared.getWeatherCoordCityJSON(lat: lat, lon: lon) { [weak self] (result) in
             switch result {
             case .success(let weatherJSON):
-                CoreDataManager.shared.addWeather(weather: weatherJSON, source: SourceValues.coordinate)
+                RealmManager.shared.addWeather(weather: weatherJSON, source: SourceValues.coordinate)
                 self?.weather = weatherJSON
                 //print("weatherJSON", weatherJSON)
             case .failure(let error):

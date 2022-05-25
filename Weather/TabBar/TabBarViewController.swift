@@ -15,10 +15,6 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         self.tabBar.unselectedItemTintColor = .darkGray
         self.tabBar.tintColor = .blue
-        
-        AdsManager.shared.setupInterstitial {
-            print("Failed to load interstitial ad with error")
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {

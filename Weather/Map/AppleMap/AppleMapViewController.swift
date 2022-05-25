@@ -10,13 +10,11 @@ import UIKit
 import MapKit
 import CoreLocation
 import Lottie
-import GoogleMobileAds
 import RxSwift
 import RxCocoa
 
 class AppleMapViewController: UIViewController {
     
-    @IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet weak var placemarkView: UIView!
     @IBOutlet weak var weatherView: UIView!
     @IBOutlet weak var weatherMyLocation: AnimationView?
@@ -42,8 +40,6 @@ class AppleMapViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         weatherMyLocation?.play()
         setupUIStart()
-        
-        AdsManager.shared.setupBunner(bannerView: bannerView, viewController: self)
         
         subjectOnButton
             .debounce(DispatchTimeInterval.seconds(2), scheduler: MainScheduler.instance)
@@ -106,7 +102,7 @@ class AppleMapViewController: UIViewController {
         NetworkServiceManager.shared.getWeatherCoordCityJSON(lat: lat, lon: lon) { [weak self] (result) in
             switch result {
             case .success(let weatherJSON):
-                CoreDataManager.shared.addWeather(weather: weatherJSON, source: SourceValues.coordinate)
+                RealmManager.shared.addWeather(weather: weatherJSON, source: SourceValues.coordinate)
                 self?.weather = weatherJSON
                 //print("weatherJSON", weatherJSON)
             case .failure(let error):

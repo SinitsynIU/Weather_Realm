@@ -7,7 +7,6 @@
 
 import UIKit
 import NVActivityIndicatorView
-import GoogleMobileAds
 
 class SearchNewsViewController: UIViewController {
     
@@ -24,10 +23,9 @@ class SearchNewsViewController: UIViewController {
     var news: NewsJSON? = nil
     let navBar = UINavigationController()
     private var state: PaginationState = .pagingIsReady
-    private var page: Int = 1
+    private var page: Int? = 1
     var timer: Timer?
     var controlGetMetod: Int?
-    var selectedIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,14 +62,14 @@ class SearchNewsViewController: UIViewController {
         newsTabelView.register(UINib(nibName: "newsCell", bundle: nil), forCellReuseIdentifier: "newsCell")
     }
     
-    func getNewsData(page: Int = 1, search: String) {
+    func getNewsData(page: Int? = nil, search: String? = nil) {
         controlGetMetod = 1
         guard state == .pagingIsReady else { return }
         state = .isPaging
-        NetworkServiceManager.shared.getNewsJSON(search: search, completion: { [weak self] (result) in
+        NetworkServiceManager.shared.getNewsJSON(search: search ?? "", completion: { [weak self] (result) in
             switch result {
             case .success(let newsJSON):
-                self?.page += 1
+                self?.page? += 1
                 self?.news = newsJSON
                 self?.state = newsJSON.articles?.count == 0 ? .pagingEnd : .pagingIsReady
                 self?.activityIndicatorView.stopAnimating()
@@ -87,13 +85,13 @@ class SearchNewsViewController: UIViewController {
         })
     }
     
-    func getNewsCountryData(page: Int = 1) {
+    func getNewsCountryData(page: Int? = nil) {
         guard state == .pagingIsReady else { return }
         state = .isPaging
         NetworkServiceManager.shared.getNewsCountryJSON(completion: { [weak self] (result) in
             switch result {
             case .success(let newsJSON):
-                self?.page += 1
+                self?.page? += 1
                 self?.news = newsJSON
                 self?.state = newsJSON.articles?.count == 0 ? .pagingEnd : .pagingIsReady
                 self?.activityIndicatorView.stopAnimating()
@@ -137,30 +135,20 @@ extension SearchNewsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard indexPath.section == 0 else { return }
-        selectedIndex = indexPath.row
-        blur.isHidden = false
-        blurActivityIndicatorView.startAnimating()
-        AdsManager.shared.setupRewarded(viewController: self) { [weak self] in
-            self?.blurActivityIndicatorView.stopAnimating()
-        } onError: { [weak self] in
-            print("Failed to load rewarded ad with error")
-            if let vc = UIStoryboard(name: "PostNewsViewController", bundle: nil).instantiateInitialViewController() as? PostNewsViewController, let index = self?.selectedIndex {
+            if let vc = UIStoryboard(name: "PostNewsViewController", bundle: nil).instantiateInitialViewController() as? PostNewsViewController {
                 vc.modalPresentationStyle = .fullScreen
                 vc.modalTransitionStyle = .flipHorizontal
-                let newsJ = self?.news?.articles?[index]
+                let newsJ = self.news?.articles?[indexPath.row]
                 vc.newsJ = newsJ
-                self?.present(vc, animated: true, completion: nil)
+                self.present(vc, animated: true, completion: nil)
             }
-            self?.selectedIndex = nil
-            self?.blur.isHidden = true
-        }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if controlGetMetod == 1 { 
             if indexPath.row == (news?.articles?.count ?? 0) - 1 {
                 activityIndicatorView.startAnimating()
-                self.getNewsData(page: self.page, search: "")
+                self.getNewsData(page: self.page)
             }
         } else {
             if indexPath.row == (news?.articles?.count ?? 0) - 1 {
@@ -178,41 +166,12 @@ extension SearchNewsViewController: UISearchBarDelegate {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
             self.blurActivityIndicatorView.startAnimating()
-            self.getNewsData(page: 0, search: searchText)
+            self.getNewsData(search: searchText)
         })
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.blurActivityIndicatorView.startAnimating()
-        self.getNewsCountryData(page: 0)
-    }
-}
-
-extension SearchNewsViewController: GADFullScreenContentDelegate {
-    
-    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        if let vc = UIStoryboard(name: "PostNewsViewController", bundle: nil).instantiateInitialViewController() as? PostNewsViewController, let index = selectedIndex {
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .flipHorizontal
-            let newsJ = news?.articles?[index]
-            vc.newsJ = newsJ
-            self.present(vc, animated: true, completion: {
-                self.blur.isHidden = true
-            })
-        }
-        selectedIndex = nil
-    }
-    
-    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
-        if let vc = UIStoryboard(name: "PostNewsViewController", bundle: nil).instantiateInitialViewController() as? PostNewsViewController, let index = selectedIndex {
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .flipHorizontal
-            let newsJ = news?.articles?[index]
-            vc.newsJ = newsJ
-            self.present(vc, animated: true, completion: {
-                self.blur.isHidden = true
-            })
-        }
-        selectedIndex = nil
+        self.getNewsCountryData()
     }
 }

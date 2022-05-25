@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A04C02C3-169C-41AA-B57C-A22ADB5C7505"
+            uuid = "00FE8404-1552-42D9-BB46-BFD17AC000FB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Weather/CustomsCellButtonAlert/HistoryTableViewCell.swift"
+            filePath = "Weather/Weather/EnterCity/EnterCityViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "panGestureAction(_:)"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "okButtonTapAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
