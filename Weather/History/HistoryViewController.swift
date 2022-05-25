@@ -32,7 +32,6 @@ class HistoryViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         getData()
-        buttonIsHidden()
         setupLocalization()
         observerWeather()
     }
@@ -61,6 +60,9 @@ class HistoryViewController: UIViewController {
                 print(del)
                 print(ins)
                 print(mod)
+                if collection.count > 0 {
+                    self.clearBDButton.isHidden = false
+                }
                 self.getData()
                 self.historyTabelView.reloadData()
             default: break
@@ -84,19 +86,10 @@ class HistoryViewController: UIViewController {
         historyTabelView.reloadData()
     }
     
-    private func buttonIsHidden() {
-//
-//        if weatherArray.value().count > 0 {
-//            self.clearBDButton.isHidden = false
-//        } else {
-//            self.clearBDButton.isHidden = true
-//        }
-    }
-    
     private func setupUI() {
         self.overrideUserInterfaceStyle = .light
         historyBgImage.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        //clearBDButton.isHidden = true
+        clearBDButton.isHidden = true
     }
     
     private func setupTabelView() {
