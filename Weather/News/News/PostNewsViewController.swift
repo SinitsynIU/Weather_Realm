@@ -31,7 +31,7 @@ class PostNewsViewController: UIViewController {
     }
     
     deinit {
-        MediaManager.shared.clearMediaPlayer()
+        MediaManager.shared.clearAudioPlayer()
         MediaManager.shared.notificationRemove()
     }
     

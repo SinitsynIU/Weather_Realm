@@ -123,13 +123,12 @@ class EnterCityViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     private func pushWeatherCurrentViewController() {
-        if let vc = UIStoryboard(name: "WeatherCurrentViewController", bundle: nil).instantiateInitialViewController() as? WeatherCurrentViewController {
+        guard let vc = WeatherCurrentViewController.getInstanceViewController as? WeatherCurrentViewController else { return }
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .flipHorizontal
             vc.weatherJ = weather
-            self.present(vc, animated: true, completion: { [weak self] in
+            present(vc, animated: true, completion: { [weak self] in
                 self?.blur.isHidden = true
             })
-        }
     }
 }

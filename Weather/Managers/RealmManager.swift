@@ -75,8 +75,8 @@ class RealmManager {
         return realm.objects(RealmBD.self).filter("source == %@", source).sorted(by:\.date, ascending: false).map { $0.mappedWeather() }
     }
     
-    func getObserverWeather(date: Date) -> Results<RealmBD> {
-        return realm.objects(RealmBD.self).filter("date == %@", date)
+    func getObserverWeather() -> Results<RealmBD> {
+        return realm.objects(RealmBD.self)
     }
     
     func removeWeatherFromDate(date: Date) -> [(WeatherJSON, Date)] {
@@ -91,7 +91,7 @@ class RealmManager {
         return realm.objects(RealmBD.self).sorted(by:\.date, ascending: false).map { $0.mappedWeather() }
     }
     
-    func removeWeatherAll() -> [(WeatherJSON, Date)] {
+    func removeWeatherAll() {
         do {
             let removedObject = realm.objects(RealmBD.self)
             try self.realm.write({
@@ -100,6 +100,5 @@ class RealmManager {
         } catch(let error) {
             print(error.localizedDescription)
         }
-        return realm.objects(RealmBD.self).map { $0.mappedWeather() }
     }
 }

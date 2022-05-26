@@ -53,8 +53,6 @@
 		485A639C2807E8AB0013E62E /* HistoryViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 485A639B2807E8AB0013E62E /* HistoryViewController.storyboard */; };
 		485A639F2807F4B30013E62E /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485A639D2807F4B30013E62E /* HistoryTableViewCell.swift */; };
 		485A63A02807F4B30013E62E /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 485A639E2807F4B30013E62E /* HistoryTableViewCell.xib */; };
-		485EB433282D7A470098B0A8 /* HistoryWeatherInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485EB432282D7A470098B0A8 /* HistoryWeatherInfoViewController.swift */; };
-		485EB435282D7A520098B0A8 /* HistoryWeatherInfoViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 485EB434282D7A520098B0A8 /* HistoryWeatherInfoViewController.storyboard */; };
 		489BC14227E8FA9900384FB3 /* WeatherJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489BC14127E8FA9900384FB3 /* WeatherJSON.swift */; };
 		48D9531028183B730060BF76 /* close.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 48D9530F28183B730060BF76 /* close.mp3 */; };
 		48D95312281845130060BF76 /* remove.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 48D95311281845130060BF76 /* remove.mp3 */; };
@@ -121,8 +119,6 @@
 		485A639B2807E8AB0013E62E /* HistoryViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HistoryViewController.storyboard; sourceTree = "<group>"; };
 		485A639D2807F4B30013E62E /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		485A639E2807F4B30013E62E /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
-		485EB432282D7A470098B0A8 /* HistoryWeatherInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryWeatherInfoViewController.swift; sourceTree = "<group>"; };
-		485EB434282D7A520098B0A8 /* HistoryWeatherInfoViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HistoryWeatherInfoViewController.storyboard; sourceTree = "<group>"; };
 		489BC14127E8FA9900384FB3 /* WeatherJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSON.swift; sourceTree = "<group>"; };
 		48D9530F28183B730060BF76 /* close.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = close.mp3; sourceTree = "<group>"; };
 		48D95311281845130060BF76 /* remove.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = remove.mp3; sourceTree = "<group>"; };
@@ -368,20 +364,10 @@
 		485A63982807E7E80013E62E /* History */ = {
 			isa = PBXGroup;
 			children = (
-				485EB431282D79CF0098B0A8 /* HistoryWeatherInfo */,
 				485A63992807E82D0013E62E /* HistoryViewController.swift */,
 				485A639B2807E8AB0013E62E /* HistoryViewController.storyboard */,
 			);
 			path = History;
-			sourceTree = "<group>";
-		};
-		485EB431282D79CF0098B0A8 /* HistoryWeatherInfo */ = {
-			isa = PBXGroup;
-			children = (
-				485EB432282D7A470098B0A8 /* HistoryWeatherInfoViewController.swift */,
-				485EB434282D7A520098B0A8 /* HistoryWeatherInfoViewController.storyboard */,
-			);
-			path = HistoryWeatherInfo;
 			sourceTree = "<group>";
 		};
 		48DBAE7F27F2CEB80035222E /* Localizations */ = {
@@ -507,7 +493,6 @@
 				480FBF3C2817C5D70064F06B /* clear.mp4 in Resources */,
 				48DBAE8427F2D6830035222E /* EnterCityViewController.storyboard in Resources */,
 				482D60E828193F22009E794D /* clouds.mp3 in Resources */,
-				485EB435282D7A520098B0A8 /* HistoryWeatherInfoViewController.storyboard in Resources */,
 				4835DAAE2812A2D8003A1533 /* delete.json in Resources */,
 				48007AB527E4BF7D00F64604 /* WeatherCurrentViewController.storyboard in Resources */,
 				48DBAEB727F352C50035222E /* AppleMapViewController.storyboard in Resources */,
@@ -606,7 +591,6 @@
 				4838C35227EC400B003778BA /* AppleMapViewController.swift in Sources */,
 				4838C34E27EB8840003778BA /* FileServiceManager.swift in Sources */,
 				4853C0D2283C7BBD00283958 /* RealmBD.swift in Sources */,
-				485EB433282D7A470098B0A8 /* HistoryWeatherInfoViewController.swift in Sources */,
 				48007AB827E4C14700F64604 /* NetworkServiceManager.swift in Sources */,
 				4838C35927EC408E003778BA /* SearchNewsViewController.swift in Sources */,
 				4838C36427EC6310003778BA /* NewsJSON.swift in Sources */,

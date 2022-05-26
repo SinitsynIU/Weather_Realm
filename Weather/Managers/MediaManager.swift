@@ -71,9 +71,11 @@ class MediaManager {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func clearMediaPlayer() {
+    func clearAudioPlayer() {
         playerAudio?.pause()
         playerAudio = nil
+    }
+    func clearVideoPlayer() {
         playerVideo?.pause()
         playerVideo = nil
         backgroundVideoPlayerViewLayer?.removeFromSuperlayer()

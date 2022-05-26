@@ -30,7 +30,8 @@ class WeatherCurrentViewController: UIViewController {
     }
     
     deinit {
-        MediaManager.shared.clearMediaPlayer()
+        MediaManager.shared.clearAudioPlayer()
+        MediaManager.shared.clearVideoPlayer()
         MediaManager.shared.notificationRemove()
     }
     

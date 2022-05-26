@@ -44,25 +44,22 @@ class HistoryViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
             super.viewDidDisappear(animated)
-        MediaManager.shared.clearMediaPlayer()
+        MediaManager.shared.clearAudioPlayer()
     }
     
     private func observerWeather() {
-        
-        guard let date = try? weatherArray.value().first?.date else { return }
-        observerWeatherToken = RealmManager.shared.getObserverWeather(date: date).observe({ collection in
+        observerWeatherToken = RealmManager.shared.getObserverWeather().observe({ collection in
             switch collection {
             case .initial(let collection):
                 print(collection.count)
+                self.clearBDButton.isHidden = collection.count == 0
                 self.historyTabelView.reloadData()
             case .update(let collection, deletions: let del, insertions: let ins, modifications: let mod):
                 print(collection.count)
                 print(del)
                 print(ins)
                 print(mod)
-                if collection.count > 0 {
-                    self.clearBDButton.isHidden = false
-                }
+                self.clearBDButton.isHidden = collection.count == 0
                 self.getData()
                 self.historyTabelView.reloadData()
             default: break
@@ -89,7 +86,6 @@ class HistoryViewController: UIViewController {
     private func setupUI() {
         self.overrideUserInterfaceStyle = .light
         historyBgImage.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        clearBDButton.isHidden = true
     }
     
     private func setupTabelView() {
@@ -153,15 +149,11 @@ extension HistoryViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        //print(indexPath)
-
-//        let weatherDB = fetchResultController.object(at: indexPath)
-//        guard indexPath.section == 0 else { return }
-//        if let vc = UIStoryboard(name: "HistoryWeatherInfoViewController", bundle: nil).instantiateInitialViewController() as? HistoryWeatherInfoViewController {
-//            vc.modalPresentationStyle = .fullScreen
-//            vc.modalTransitionStyle = .flipHorizontal
-//            vc.weatherJ = weatherDB
-//            self.present(vc, animated: true, completion: nil)
-//        }
+        guard let weather = try? weatherArray.value()[indexPath.row].weather else { return }
+        guard let vc = WeatherCurrentViewController.getInstanceViewController as? WeatherCurrentViewController else { return }
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .flipHorizontal
+            vc.weatherJ = weather
+            present(vc, animated: true)
     }
 }

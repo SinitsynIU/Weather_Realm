@@ -135,13 +135,12 @@ extension SearchNewsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard indexPath.section == 0 else { return }
-            if let vc = UIStoryboard(name: "PostNewsViewController", bundle: nil).instantiateInitialViewController() as? PostNewsViewController {
+        guard let newsJ = self.news?.articles?[indexPath.row] else { return }
+        guard let vc = PostNewsViewController.getInstanceViewController as? PostNewsViewController else { return }
                 vc.modalPresentationStyle = .fullScreen
                 vc.modalTransitionStyle = .flipHorizontal
-                let newsJ = self.news?.articles?[indexPath.row]
                 vc.newsJ = newsJ
                 self.present(vc, animated: true, completion: nil)
-            }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
