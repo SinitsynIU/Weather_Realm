@@ -24,7 +24,7 @@ class GoogleMapViewController: UIViewController {
     let locationManager = CLLocationManager()
     var weather: WeatherJSON? = nil
     let disposeBag = DisposeBag()
-    let subjectOnMap = BehaviorSubject<CLLocationCoordinate2D>(value: CLLocationCoordinate2D())
+    var subjectOnMap: BehaviorSubject<CLLocationCoordinate2D>? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,22 +34,26 @@ class GoogleMapViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         mapView.delegate = self
-        
-        subjectOnMap
+        getDataOnMap()
+    }
+    
+    private func getDataOnMap() {
+        subjectOnMap?
             .debounce(DispatchTimeInterval.seconds(2), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { value in
-                self.getCoordCityData(lat: value.latitude, lon: value.longitude, onCompleted: { [weak self] in
-                        self?.setupUI(weather: self?.weather)
+            .subscribe(onNext: { [weak self] value in
+                guard let self = self else { return }
+                self.getCoordCityData(lat: value.latitude, lon: value.longitude, onCompleted: {
+                        self.setupUI(weather: self.weather)
                         let geocoder = CLGeocoder()
                         geocoder.reverseGeocodeLocation(CLLocation(
                             latitude: value.latitude,
                             longitude: value.longitude)) { placemarks, error in
                                 if let error = error {
                                     print(error.localizedDescription)
-                    }
+                        }
                         guard let placemark = placemarks?.first else { return }
-                                self?.placemarkCountryLocalityName.text = "\(placemark.country ?? "unknown"), \(placemark.locality ?? "unknown"), \(placemark.name ?? "unknown")"
-                                self?.placemarkSubAdministrativeArea.text = "\(placemark.administrativeArea ?? "unknown")"
+                                self.placemarkCountryLocalityName.text = "\(placemark.country ?? "unknown"), \(placemark.locality ?? "unknown"), \(placemark.name ?? "unknown")"
+                                self.placemarkSubAdministrativeArea.text = "\(placemark.administrativeArea ?? "unknown")"
                         }
                 })
             }).disposed(by: disposeBag)
@@ -111,11 +115,19 @@ extension GoogleMapViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         UIView.animate(withDuration: 0.5) { [weak self] in
-            self?.weatherView.alpha = 0
-            self?.placemarkView.alpha = 0
+            guard let self = self else { return }
+            self.weatherView.alpha = 0
+            self.placemarkView.alpha = 0
         }
-        DispatchQueue.global().async {
-            self.subjectOnMap.onNext(position.target)
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            let coordinates = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
+            if self.subjectOnMap == nil {
+                self.subjectOnMap = BehaviorSubject<CLLocationCoordinate2D>(value: coordinates)
+                self.getDataOnMap()
+            } else {
+                self.subjectOnMap?.onNext(coordinates)
+            }
         }
     }
 }

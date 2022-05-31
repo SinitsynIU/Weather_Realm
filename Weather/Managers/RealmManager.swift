@@ -79,16 +79,16 @@ class RealmManager {
         return realm.objects(RealmBD.self)
     }
     
-    func removeWeatherFromDate(date: Date) -> [(WeatherJSON, Date)] {
+    func removeWeatherFromDate(date: Date) {//}-> [(WeatherJSON, Date)] {
         do {
-            guard let removedObject = realm.objects(RealmBD.self).filter("date == %@", date).first else { return [] }
+            guard let removedObject = realm.objects(RealmBD.self).filter("date == %@", date).first else { return }
             try self.realm.write({
                 self.realm.delete(removedObject)
             })
         } catch(let error) {
             print(error.localizedDescription)
         }
-        return realm.objects(RealmBD.self).sorted(by:\.date, ascending: false).map { $0.mappedWeather() }
+        //return realm.objects(RealmBD.self).sorted(by:\.date, ascending: false).map { $0.mappedWeather() }
     }
     
     func removeWeatherAll() {

@@ -51,14 +51,9 @@ class HistoryViewController: UIViewController {
         observerWeatherToken = RealmManager.shared.getObserverWeather().observe({ collection in
             switch collection {
             case .initial(let collection):
-                print(collection.count)
                 self.clearBDButton.isHidden = collection.count == 0
                 self.historyTabelView.reloadData()
-            case .update(let collection, deletions: let del, insertions: let ins, modifications: let mod):
-                print(collection.count)
-                print(del)
-                print(ins)
-                print(mod)
+            case .update(let collection, deletions: _, insertions: _, modifications: _):
                 self.clearBDButton.isHidden = collection.count == 0
                 self.getData()
                 self.historyTabelView.reloadData()
@@ -70,14 +65,11 @@ class HistoryViewController: UIViewController {
     private func getData () {
         if historySegmentedControl.selectedSegmentIndex == 0 {
             let parameters = RealmManager.shared.getWeather(source: SourceValues.city.rawValue)
-            weatherArray.subscribe(onNext: { value in
-            }).disposed(by: disposeBag)
+            weatherArray.onNext([])
             weatherArray.onNext(parameters)
         } else {
             let parameters = RealmManager.shared.getWeather(source: SourceValues.coordinate.rawValue)
-            weatherArray.subscribe(onNext: { value in
-                print(value)
-            }).disposed(by: disposeBag)
+            weatherArray.onNext([])
             weatherArray.onNext(parameters)
         }
         historyTabelView.reloadData()

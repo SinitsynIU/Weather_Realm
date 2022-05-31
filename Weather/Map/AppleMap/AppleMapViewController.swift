@@ -27,9 +27,8 @@ class AppleMapViewController: UIViewController {
     let locationManager = CLLocationManager()
     var weather: WeatherJSON? = nil
     let disposeBag = DisposeBag()
-    let subjectOnButton = BehaviorSubject<CLLocationCoordinate2D>(value: CLLocationCoordinate2D())
-    
-    let subjectOnMap = BehaviorSubject<CLLocationCoordinate2D>(value: CLLocationCoordinate2D())
+    var subjectOnButton: BehaviorSubject<CLLocationCoordinate2D>?
+    var subjectOnMap: BehaviorSubject<CLLocationCoordinate2D>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,33 +39,42 @@ class AppleMapViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         weatherMyLocation?.play()
         setupUIStart()
-        
-        subjectOnButton
+        getDataOnMap()
+        getDataOnButton()
+    }
+    
+    private func getDataOnMap() {
+        subjectOnMap?
             .debounce(DispatchTimeInterval.seconds(2), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { value in
-                self.mapView.setCenter(value, animated: true)
-        }).disposed(by: disposeBag)
-        
-        subjectOnMap
-            .debounce(DispatchTimeInterval.seconds(2), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { value in
+            .subscribe(onNext: { [weak self] value in
+                guard let self = self else { return }
                 self.weatherMyLocation?.pause()
-                    self.getCoordCityData(lat: value.latitude, lon: value.longitude, onCompleted: { [weak self] in
-                        self?.weatherMyLocation?.pause()
-                                self?.setupUI(weather: self?.weather)
+                    self.getCoordCityData(lat: value.latitude, lon: value.longitude, onCompleted: {
+                        self.weatherMyLocation?.pause()
+                                self.setupUI(weather: self.weather)
                                 let geocoder = CLGeocoder()
                                 geocoder.reverseGeocodeLocation(CLLocation(
                                                 latitude: value.latitude,
-                                                longitude: value.longitude))                     { placemarks, error in
+                                                longitude: value.longitude)) { placemarks, error in
                                 if let error = error {
                                     print(error.localizedDescription)
                                 }
                                 guard let placemark = placemarks?.first else { return }
-                                self?.placemarkCountryLocalityName.text = "\(placemark.country ?? "unknown"), \(placemark.locality ?? "unknown"), \(placemark.name ?? "unknown")"
-                                self?.placemarkSubAdministrativeArea.text = "\(placemark.administrativeArea ?? "unknown")"
+                                self.placemarkCountryLocalityName.text = "\(placemark.country ?? "unknown"), \(placemark.locality ?? "unknown"), \(placemark.name ?? "unknown")"
+                                self.placemarkSubAdministrativeArea.text = "\(placemark.administrativeArea ?? "unknown")"
                             }
+                        self.weatherMyLocation?.play()
                         })
             }).disposed(by: disposeBag)
+    }
+    
+    private func getDataOnButton() {
+        subjectOnButton?
+            .debounce(DispatchTimeInterval.seconds(2), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] value in
+                guard let self = self else { return }
+                self.mapView.setCenter(value, animated: true)
+        }).disposed(by: disposeBag)
     }
     
     private func setupUIStart() {
@@ -115,12 +123,18 @@ class AppleMapViewController: UIViewController {
     @IBAction func myLocationTapAction(_ sender: Any) {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
-            DispatchQueue.global().async {
+            DispatchQueue.global().async { [weak self] in
+                guard let self = self else { return }
                 guard let myLocation = self.locationManager.location?.coordinate else { return }
-                self.subjectOnButton.onNext(myLocation)
+                if self.subjectOnButton == nil {
+                    self.subjectOnButton = BehaviorSubject<CLLocationCoordinate2D>(value: myLocation)
+                    self.getDataOnButton()
+                } else {
+                self.subjectOnButton?.onNext(myLocation)
+                }
             }
-        }
         locationManager.stopUpdatingLocation()
+        }
     }
 }
 
@@ -129,11 +143,19 @@ extension AppleMapViewController: MKMapViewDelegate {
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
         self.weatherMyLocation?.play()
         UIView.animate(withDuration: 0.5) { [weak self] in
-            self?.weatherView.alpha = 0
-            self?.placemarkView.alpha = 0
+            guard let self = self else { return }
+            self.weatherView.alpha = 0
+            self.placemarkView.alpha = 0
         }
-        DispatchQueue.global().async {
-            self.subjectOnMap.onNext(mapView.centerCoordinate)
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            let coordinates = CLLocationCoordinate2D(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
+            if self.subjectOnMap == nil {
+                self.subjectOnMap = BehaviorSubject<CLLocationCoordinate2D>(value: coordinates)
+                self.getDataOnMap()
+            } else {
+            self.subjectOnMap?.onNext(coordinates)
+            }
         }
     }
 }
@@ -143,6 +165,6 @@ extension AppleMapViewController: CLLocationManagerDelegate {
     private func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
                 locationManager.startUpdatingLocation()
-            }
         }
+    }
 }
